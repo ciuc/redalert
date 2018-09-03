@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package antiprotv.ro.redalert.db;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

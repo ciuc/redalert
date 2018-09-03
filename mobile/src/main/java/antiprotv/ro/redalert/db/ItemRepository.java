@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package antiprotv.ro.redalert.db;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;

@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package antiprotv.ro.redalert.db;
 
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.Database;
@@ -9,10 +9,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Item.class}, version = 1)
+@Database(entities = {Item.class, Alert.class}, version = 1)
 public abstract class RedalertRoomDatabase extends RoomDatabase {
 
     public abstract ItemDao itemDao();
+    public abstract AlertDao alertDao();
 
     private static RedalertRoomDatabase INSTANCE;
 
