@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
 public class AlertListActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +28,10 @@ public class AlertListActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        com.getbase.floatingactionbutton.FloatingActionButton actionC = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.pink_icon);
+        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions_left);
+        menuMultipleActions.addButton(actionC);
     }
 
     @Override
