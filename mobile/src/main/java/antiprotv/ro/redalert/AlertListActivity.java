@@ -1,6 +1,7 @@
 package antiprotv.ro.redalert;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -41,13 +42,16 @@ public class AlertListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter= new AlertListAdapter(this);
-        adapter.setAlerts(redAlertViewModel.getAllAlerts().getValue());
+        LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
+
+        adapter.setAlerts(alerts.getValue());
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
             @Override
             public void onChanged(@Nullable final List<Alert> alerts) {
                 // Update the cached copy of the words in the adapter.
                 adapter.setAlerts(alerts);
                 adapter.notifyDataSetChanged();
+                setNotifications(alerts);
             }
         });
 
@@ -70,20 +74,26 @@ public class AlertListActivity extends AppCompatActivity {
             }
         });
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.common_google_signin_btn_text_dark)
-                .setContentTitle("content title")
-                .setContentText("Content text")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1, mBuilder.build());
+        setNotifications(alerts.getValue());
     }
 
 
+    private void setNotifications(List<Alert> alerts) {
+        if (alerts !=null) {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            for (Alert alert : alerts) {
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
+                        .setSmallIcon(R.drawable.common_google_signin_btn_text_dark)
+                        .setContentTitle(alert.getItem())
+                        .setContentText(alert.getStore())
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                        .setColor(getResources().getColor(alert.getColor()));
+                notificationManager.notify(alert.getId(), mBuilder.build());
+            }
+        }
+
+    }
     private class AddAlertClickListener implements View.OnClickListener {
         private int level;
 
