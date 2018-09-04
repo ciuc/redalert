@@ -8,14 +8,18 @@
     tools:context=".AlertListActivity"
     tools:showIn="@layout/activity_alert_list">
 
-    <ListView
-        android:id="@+id/alert_list_view"
+
+    <TextView
+        android:id="@+id/level"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>

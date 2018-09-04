@@ -27,7 +27,7 @@ public class RedAlertViewModel extends AndroidViewModel {
     public LiveData<List<Item>> getAllItems() {
         return allItems;
     }
-    public LiveData<List<Alert>> getAllAlert() {
+    public LiveData<List<Alert>> getAllAlerts() {
         return allAlerts;
     }
 
