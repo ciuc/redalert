@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,15 +63,24 @@ public class AlertListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton removeAllFab = (FloatingActionButton) findViewById(R.id.remove_all);
-        removeAllFab.setOnClickListener(new View.OnClickListener(
-
-        ) {
+        removeAllFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redAlertViewModel.removeAllAlerts();
-
             }
         });
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.drawable.common_google_signin_btn_text_dark)
+                .setContentTitle("content title")
+                .setContentText("Content text")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, mBuilder.build());
     }
 
 
