@@ -28,72 +28,93 @@ import antiprotv.ro.redalert.db.RedAlertViewModel;
 
 public class AlertListActivity extends AppCompatActivity {
     private RedAlertViewModel redAlertViewModel;
+    AlertListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
-        final AlertListAdapter adapter = new AlertListAdapter(this);
-
+        adapter= new AlertListAdapter(this);
+        adapter.setAlerts(redAlertViewModel.getAllAlerts().getValue());
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
             @Override
             public void onChanged(@Nullable final List<Alert> alerts) {
                 // Update the cached copy of the words in the adapter.
                 adapter.setAlerts(alerts);
+                adapter.notifyDataSetChanged();
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_orange);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AlertListActivity.this);
-                builder.setTitle("Add Alert: orange");
-                LinearLayout layout = new LinearLayout(AlertListActivity.this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-
-                final EditText inputItem = new EditText(AlertListActivity.this);
-                inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
-                layout.addView(inputItem);
-
-                final EditText inputStore = new EditText(AlertListActivity.this);
-                inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
-                layout.addView(inputStore);
-
-                builder.setView(layout);
-                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
-                        Alert alert = new Alert(Alert.ORANGE_ALERT, inputItem.getText().toString(), inputStore.getText().toString());
-                        vm.insert(alert);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            }
-        });
+        FloatingActionButton addRedFab = (FloatingActionButton) findViewById(R.id.add_red);
+        addRedFab.setOnClickListener(new AddAlertClickListener(Alert.RED_ALERT));
+        FloatingActionButton addOrangeFab = (FloatingActionButton) findViewById(R.id.add_orange);
+        addOrangeFab.setOnClickListener(new AddAlertClickListener(Alert.ORANGE_ALERT));
+        FloatingActionButton addYellowFab = (FloatingActionButton) findViewById(R.id.add_yellow);
+        addYellowFab.setOnClickListener(new AddAlertClickListener(Alert.YELLOW_ALERT));
 
         RecyclerView recyclerView = findViewById(R.id.alert_list_view);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
+        FloatingActionButton removeAllFab = (FloatingActionButton) findViewById(R.id.remove_all);
+        removeAllFab.setOnClickListener(new View.OnClickListener(
+
+        ) {
+            @Override
+            public void onClick(View v) {
+                redAlertViewModel.removeAllAlerts();
+
+            }
+        });
     }
 
 
-    private void showAddAlertDialog() {
+    private class AddAlertClickListener implements View.OnClickListener {
+        private int level;
 
+        AddAlertClickListener(int level) {
+            this.level = level;
+        }
+
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(AlertListActivity.this);
+            builder.setTitle("Add New Alert: " + Alert.getColor(level));
+            LinearLayout layout = new LinearLayout(AlertListActivity.this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+
+            final EditText inputItem = new EditText(AlertListActivity.this);
+            inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
+            layout.addView(inputItem);
+
+            final EditText inputStore = new EditText(AlertListActivity.this);
+            inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
+            layout.addView(inputStore);
+
+            builder.setView(layout);
+            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
+                    Alert alert = new Alert(level, inputItem.getText().toString(), inputStore.getText().toString());
+                    vm.insert(alert);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

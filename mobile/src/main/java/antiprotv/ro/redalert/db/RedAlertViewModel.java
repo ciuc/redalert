@@ -38,4 +38,6 @@ public class RedAlertViewModel extends AndroidViewModel {
         alertRepository.insert(alert);
     }
 
+    public void removeAllAlerts(){alertRepository.removeAll();}
+
 }

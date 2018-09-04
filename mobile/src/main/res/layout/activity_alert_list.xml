@@ -15,8 +15,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="#FF0000"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Alerts"
+
+            />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -26,7 +30,8 @@
         android:id="@+id/alert_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/content_alert_list" />
+        android:layout_marginTop="?attr/actionBarSize"
+         />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_red"
@@ -58,5 +63,18 @@
         android:layout_marginVertical="@dimen/fab_margin"
         app:backgroundTint="@color/yellow"
         app:srcCompat="@android:drawable/ic_input_add"
-        app:useCompatPadding="true"/>
+        app:useCompatPadding="true"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/remove_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginHorizontal="@dimen/fab_margin"
+        android:layout_marginVertical="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@android:drawable/ic_input_delete"
+        app:useCompatPadding="true"
+        />
 </android.support.design.widget.CoordinatorLayout>

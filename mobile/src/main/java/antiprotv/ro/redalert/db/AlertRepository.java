@@ -39,4 +39,28 @@ public class AlertRepository {
             return null;
         }
     }
+
+
+    private static class deleteAsyncTask extends AsyncTask<Alert, Void, Void> {
+
+        private AlertDao mAsyncTaskDao;
+
+        deleteAsyncTask(AlertDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Alert... params) {
+            if (params.length == 0) {
+                mAsyncTaskDao.removeAll();
+            } else {
+
+            }
+            return null;
+        }
+    }
+
+    public void removeAll() {
+        new deleteAsyncTask(alertDao).execute();
+    }
 }

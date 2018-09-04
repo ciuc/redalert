@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".AlertListActivity"
-    tools:showIn="@layout/activity_alert_list">
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:padding="5dp"
+    android:background="@drawable/alert_rounded_background"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
     <TextView
-        android:id="@+id/level"
+        android:id="@+id/item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="32dp"
+        android:text="Toothbrush"
+        android:textColor="#FF0000"/>
+    <TextView
+        android:id="@+id/store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item"
+        android:text="FROM: DM in MegaMall"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
