@@ -40,7 +40,7 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/red"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         app:useCompatPadding="true"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -51,7 +51,7 @@
         android:layout_marginHorizontal="@dimen/fab_margin_2"
         android:layout_marginVertical="@dimen/fab_margin"
         app:backgroundTint="@color/orange"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         app:useCompatPadding="true" />
 
     <android.support.design.widget.FloatingActionButton
@@ -62,7 +62,7 @@
         android:layout_marginHorizontal="@dimen/fab_margin_3"
         android:layout_marginVertical="@dimen/fab_margin"
         app:backgroundTint="@color/yellow"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         app:useCompatPadding="true"
         />
 
@@ -74,7 +74,7 @@
         android:layout_marginHorizontal="@dimen/fab_margin"
         android:layout_marginVertical="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_input_delete"
+        app:srcCompat="@drawable/ic_delete_forever_white_24dp"
         app:useCompatPadding="true"
         />
 </android.support.design.widget.CoordinatorLayout>

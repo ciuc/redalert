@@ -9,20 +9,29 @@
     android:background="@drawable/alert_rounded_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
+    <ImageView
+        android:id="@+id/alert_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="11dp"
+        android:src="@drawable/ic_warning_red_24dp"
+        />
     <TextView
         android:id="@+id/item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/alert_icon"
         android:textSize="32dp"
         android:text="Toothbrush"
-        android:textColor="#FF0000"/>
+        android:textColor="#FF0000" />
     <TextView
         android:id="@+id/store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item"
+        android:layout_toRightOf="@+id/alert_icon"
         android:text="FROM: DM in MegaMall"/>
 
 </RelativeLayout>

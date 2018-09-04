@@ -75,6 +75,8 @@ public class AlertListActivity extends AppCompatActivity {
         });
 
         setNotifications(alerts.getValue());
+
+
     }
 
 
@@ -83,7 +85,7 @@ public class AlertListActivity extends AppCompatActivity {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             for (Alert alert : alerts) {
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
-                        .setSmallIcon(R.drawable.common_google_signin_btn_text_dark)
+                        .setSmallIcon(alert.getIcon())
                         .setContentTitle(alert.getItem())
                         .setContentText(alert.getStore())
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -80,6 +80,19 @@ public class Alert {
         return R.color.yellow;
     }
 
+    public int getIcon() {
+        if (level == RED_ALERT) {
+            return R.drawable.ic_warning_red_24dp;
+        }
+        if (level == YELLOW_ALERT) {
+            return R.drawable.ic_warning_yellow_24dp;
+        }
+        if (level == ORANGE_ALERT) {
+            return R.drawable.ic_warning_orange_24dp;
+        }
+        return R.drawable.ic_warning_red_24dp;
+    }
+
     public static String getColor(int level){
         if (level == RED_ALERT) {
             return "red";
