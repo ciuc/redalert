@@ -85,7 +85,7 @@ public class AlertListActivity extends AppCompatActivity {
                 redAlertViewModel.removeAllAlerts();
                 adapter.setAlerts(null);
                 adapter.notifyDataSetChanged();
-                setNotifications(null);
+                removeAllNotifications();
                 toggleAlertListVisibility(null, recyclerView, noAlertsView);
             }
         });
@@ -123,7 +123,11 @@ public class AlertListActivity extends AppCompatActivity {
                 notificationManager.notify(alert.getId(), mBuilder.build());
             }
         }
+    }
 
+    private void removeAllNotifications() {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.cancelAll();
     }
     private class AddAlertClickListener implements View.OnClickListener {
         private int level;
@@ -176,12 +180,13 @@ public class AlertListActivity extends AppCompatActivity {
     }
 
     private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
-        if (alerts == null) {
-            recyclerView.setVisibility(View.GONE);
-            noAlertsView.setVisibility(View.VISIBLE);
-        } else {
+        if (alerts != null && !alerts.isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
             noAlertsView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            noAlertsView.setVisibility(View.VISIBLE);
+
         }
     }
 
