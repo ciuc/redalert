@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -48,6 +50,10 @@ public class AlertListActivity extends AppCompatActivity {
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter= new AlertListAdapter(this);
         LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
+        final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
+        final TextView noAlertsView = findViewById(R.id.empty_view);
+
+        toggleAlertListVisibility(alerts.getValue(), recyclerView, noAlertsView);
 
         adapter.setAlerts(alerts.getValue());
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
@@ -57,6 +63,7 @@ public class AlertListActivity extends AppCompatActivity {
                 adapter.setAlerts(alerts);
                 adapter.notifyDataSetChanged();
                 setNotifications(alerts);
+                toggleAlertListVisibility(alerts, recyclerView, noAlertsView);
             }
         });
 
@@ -67,7 +74,7 @@ public class AlertListActivity extends AppCompatActivity {
         FloatingActionButton addYellowFab = (FloatingActionButton) findViewById(R.id.add_yellow);
         addYellowFab.setOnClickListener(new AddAlertClickListener(Alert.YELLOW_ALERT));
 
-        RecyclerView recyclerView = findViewById(R.id.alert_list_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -76,6 +83,10 @@ public class AlertListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redAlertViewModel.removeAllAlerts();
+                adapter.setAlerts(null);
+                adapter.notifyDataSetChanged();
+                setNotifications(null);
+                toggleAlertListVisibility(null, recyclerView, noAlertsView);
             }
         });
         createNotificationChannel();
@@ -124,18 +135,25 @@ public class AlertListActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(AlertListActivity.this);
-            builder.setTitle("Add New Alert: " + Alert.getColor(level));
+            builder.setTitle("Add New Alert: " + Alert.getColor(level).toUpperCase());
             LinearLayout layout = new LinearLayout(AlertListActivity.this);
             layout.setOrientation(LinearLayout.VERTICAL);
 
+            TextInputLayout layoutItem = new TextInputLayout(AlertListActivity.this);
+
             final EditText inputItem = new EditText(AlertListActivity.this);
-            inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
-            layout.addView(inputItem);
+            inputItem.setHint(R.string.what);
+            inputItem.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+            layoutItem.addView(inputItem);
 
+            TextInputLayout layoutStore = new TextInputLayout(AlertListActivity.this);
             final EditText inputStore = new EditText(AlertListActivity.this);
-            inputItem.setInputType(InputType.TYPE_CLASS_TEXT);
-            layout.addView(inputStore);
+            inputStore.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+            inputStore.setHint(R.string.where);
+            layoutStore.addView(inputStore);
 
+            layout.addView(layoutItem);
+            layout.addView(layoutStore);
             builder.setView(layout);
             builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 @Override
@@ -154,6 +172,16 @@ public class AlertListActivity extends AppCompatActivity {
             });
 
             builder.show();
+        }
+    }
+
+    private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
+        if (alerts == null) {
+            recyclerView.setVisibility(View.GONE);
+            noAlertsView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            noAlertsView.setVisibility(View.GONE);
         }
     }
 
