@@ -1,10 +1,14 @@
 package antiprotv.ro.redalert;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +34,7 @@ import antiprotv.ro.redalert.db.Alert;
 import antiprotv.ro.redalert.db.RedAlertViewModel;
 
 public class AlertListActivity extends AppCompatActivity {
+    public static final String RED_ALERT_CHANNEL = "RED_ALERT_CHANNEL";
     private RedAlertViewModel redAlertViewModel;
     AlertListAdapter adapter;
 
@@ -73,18 +78,31 @@ public class AlertListActivity extends AppCompatActivity {
                 redAlertViewModel.removeAllAlerts();
             }
         });
-
+        createNotificationChannel();
         setNotifications(alerts.getValue());
-
-
     }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel(RED_ALERT_CHANNEL, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     private void setNotifications(List<Alert> alerts) {
         if (alerts !=null) {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             for (Alert alert : alerts) {
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, RED_ALERT_CHANNEL)
                         .setSmallIcon(alert.getIcon())
                         .setContentTitle(alert.getItem())
                         .setContentText(alert.getStore())

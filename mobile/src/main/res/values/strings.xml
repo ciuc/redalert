@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">redalert</string>
+    <string name="app_name">Red Alert!</string>
     <string name="action_settings">Settings</string>
+    <string name="channel_name">Red Alert APP notification channel</string>
+    <string name="channel_group_name">Red Alert APP notification channel group</string>
+    <string name="channel_description">Notifications from Red Alert list app</string>
 </resources>
