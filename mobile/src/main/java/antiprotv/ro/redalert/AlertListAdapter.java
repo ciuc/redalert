@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import antiprotv.ro.redalert.db.Alert;
+import antiprotv.ro.redalert.db.RedAlertViewModel;
 
 public class AlertListAdapter extends RecyclerView.Adapter {
     Logger logger = Logger.getLogger(AlertListAdapter.class.getName());
@@ -59,32 +61,32 @@ public class AlertListAdapter extends RecyclerView.Adapter {
             if (alert.getLevel() == Alert.RED_ALERT) {
                 makeOrange = menu.add(Menu.NONE, 3, 3, "Make Orange");
                 makeYellow = menu.add(Menu.NONE, 4, 4, "Make Yellow");
-                makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
-                makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
+                makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
+                makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }
             if (alert.getLevel() == Alert.ORANGE_ALERT) {
-                makeRed = menu.add(Menu.NONE, 3, 3, "Make Red");
+                makeRed = menu.add(Menu.NONE, 5, 3, "Make Red");
                 makeYellow = menu.add(Menu.NONE, 4, 4, "Make Yellow");
-                makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
-                makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
+                makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
+                makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }
             if (alert.getLevel() == Alert.YELLOW_ALERT) {
-                makeRed = menu.add(Menu.NONE, 3, 3, "Make Red");
-                makeOrange = menu.add(Menu.NONE, 4, 4, "Make Orange");
-                makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
-                makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
+                makeRed = menu.add(Menu.NONE, 5, 3, "Make Red");
+                makeOrange = menu.add(Menu.NONE, 3, 4, "Make Orange");
+                makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
+                makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }
-            edit.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
-            delete.setOnMenuItemClickListener(new OnClickMenu(this.alert.getId(), v));
+            edit.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
+            delete.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
 
         }
 
         private class OnClickMenu implements MenuItem.OnMenuItemClickListener {
-            int alertId;
+            Alert alert;
             View v;
 
-            OnClickMenu(int alertId, View v){
-                this.alertId = alertId;
+            OnClickMenu(Alert alert, View v){
+                this.alert = alert;
                 this.v = v;
             }
             @Override
@@ -93,11 +95,21 @@ public class AlertListAdapter extends RecyclerView.Adapter {
 
                 switch (item.getItemId()) {
                     case 1:
-                        Toast.makeText(v.getContext(), new Integer(alertId).toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "NOT IMPLEMENTED YET. Please remove and create again.", Toast.LENGTH_SHORT).show();
                         break;
-
                     case 2:
-                        Toast.makeText(v.getContext(), new Integer(alertId).toString(), Toast.LENGTH_SHORT).show();
+                        viewModel.removeAlert(this.alert);
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(view.getContext());
+                        notificationManager.cancel(this.alert.getId());
+                        break;
+                    case 3:
+                        viewModel.changeLevel(alert,Alert.ORANGE_ALERT);
+                        break;
+                    case 4:
+                        viewModel.changeLevel(alert,Alert.YELLOW_ALERT);
+                        break;
+                    case 5:
+                        viewModel.changeLevel(alert,Alert.RED_ALERT);
                         break;
                 }
                 return true;
@@ -119,8 +131,9 @@ public class AlertListAdapter extends RecyclerView.Adapter {
     }
 
     private List<Alert> alerts;
-
-    AlertListAdapter(Context context) {
+    RedAlertViewModel viewModel;
+    AlertListAdapter(Context context, RedAlertViewModel viewModel) {
+        this.viewModel = viewModel;
         inflater =  LayoutInflater.from(context);
     }
 

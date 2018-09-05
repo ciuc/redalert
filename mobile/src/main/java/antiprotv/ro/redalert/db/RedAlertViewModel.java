@@ -39,5 +39,10 @@ public class RedAlertViewModel extends AndroidViewModel {
     }
 
     public void removeAllAlerts(){alertRepository.removeAll();}
+    public void removeAlert(Alert alert){alertRepository.delete(alert);}
+
+    public void changeLevel(Alert alert, int level) {
+        alertRepository.update(alert, level);
+    }
 
 }

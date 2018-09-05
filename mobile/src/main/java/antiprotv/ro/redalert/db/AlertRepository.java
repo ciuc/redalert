@@ -26,9 +26,7 @@ public class AlertRepository {
     }
 
     private static class insertAsyncTask extends AsyncTask<Alert, Void, Void> {
-
         private AlertDao mAsyncTaskDao;
-
         insertAsyncTask(AlertDao dao) {
             mAsyncTaskDao = dao;
         }
@@ -40,11 +38,22 @@ public class AlertRepository {
         }
     }
 
+    private static class updateAsyncTask extends AsyncTask<Alert, Void, Void> {
+        private AlertDao mAsyncTaskDao;
+        updateAsyncTask(AlertDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Alert... params) {
+            mAsyncTaskDao.updateAlerts(params);
+            return null;
+        }
+    }
+
 
     private static class deleteAsyncTask extends AsyncTask<Alert, Void, Void> {
-
         private AlertDao mAsyncTaskDao;
-
         deleteAsyncTask(AlertDao dao) {
             mAsyncTaskDao = dao;
         }
@@ -54,7 +63,9 @@ public class AlertRepository {
             if (params.length == 0) {
                 mAsyncTaskDao.removeAll();
             } else {
-
+                for (Alert alert: params) {
+                    mAsyncTaskDao.removeAlert(alert);
+                }
             }
             return null;
         }
@@ -62,5 +73,14 @@ public class AlertRepository {
 
     public void removeAll() {
         new deleteAsyncTask(alertDao).execute();
+    }
+
+    public void delete(Alert... alerts) { new deleteAsyncTask(alertDao).execute(alerts);}
+
+    public void update(Alert alert, int level) {
+        if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.YELLOW_ALERT){
+            alert.setLevel(level);
+            new updateAsyncTask(alertDao).execute(alert);
+        }
     }
 }

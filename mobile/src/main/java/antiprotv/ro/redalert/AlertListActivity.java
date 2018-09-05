@@ -48,7 +48,7 @@ public class AlertListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
-        adapter= new AlertListAdapter(this);
+        adapter= new AlertListAdapter(this, redAlertViewModel);
         LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
         final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
         final TextView noAlertsView = findViewById(R.id.empty_view);
