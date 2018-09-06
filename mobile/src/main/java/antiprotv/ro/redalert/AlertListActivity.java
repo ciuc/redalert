@@ -7,6 +7,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -155,7 +156,16 @@ public class AlertListActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            Intent about = new Intent();
+            about.setClassName(this, "antiprotv.ro.redalert.AboutActivity");
+            startActivity(about);
+            return true;
+        }
+        if (id == R.id.action_help) {
+            Intent about = new Intent();
+            about.setClassName(this, "antiprotv.ro.redalert.AboutActivity");
+            startActivity(about);
             return true;
         }
 

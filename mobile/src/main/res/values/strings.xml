@@ -7,4 +7,16 @@
     <string name="no_alerts">You have no alerts. Looks like you\'ve got everything covered ;)</string>
     <string name= "what">WHAT:</string>
     <string name= "where">WHERE FROM:</string>
+    <string name= "action_about">About</string>
+    <string name= "action_help">Help</string>
+    <string name="about.text"><![CDATA[
+    <h1>Red Alert - shopping priority list<h1>
+<p>This simple app just displays the clock and has 4 buttons associated each with a radio stream and came from the desire to be able to see the clock in  my kithcen and listen to the Radio Guerrilla morning show at a touch of a button, while living abroad. :)</p>
+]]>
+    </string>
+    <string name="help.text"><![CDATA[
+    <h1>Red Alert - shopping priority list<h1>
+<p>This simple app just displays the clock and has 4 buttons associated each with a radio stream and came from the desire to be able to see the clock in  my kithcen and listen to the Radio Guerrilla morning show at a touch of a button, while living abroad. :)</p>
+]]>
+    </string>
 </resources>

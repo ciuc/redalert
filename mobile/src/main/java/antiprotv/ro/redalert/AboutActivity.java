@@ -12,13 +12,13 @@ import android.widget.TextView;
 /**
  * Created by ciuc on 7/19/16.
  */
-public class HelpActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        TextView foo = (TextView) findViewById(R.id.helpText);
-        foo.setText(Html.fromHtml(getString(R.string.help_text)));
+        TextView foo = (TextView) findViewById(R.id.aboutText);
+        foo.setText(Html.fromHtml(getString(R.string.about_text)));
     }
 
     @Override
