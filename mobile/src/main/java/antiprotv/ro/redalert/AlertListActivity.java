@@ -11,21 +11,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import antiprotv.ro.redalert.db.Alert;
@@ -168,28 +171,31 @@ public class AlertListActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(AlertListActivity.this);
-            builder.setTitle("Add New Alert: " + Alert.getColor(level).toUpperCase());
-            LinearLayout layout = new LinearLayout(AlertListActivity.this);
-            layout.setOrientation(LinearLayout.VERTICAL);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
+            dialogBuilder.setTitle("Add New Alert: " + Alert.getColor(level).toUpperCase());
+            LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
-            TextInputLayout layoutItem = new TextInputLayout(AlertListActivity.this);
-
-            final EditText inputItem = new EditText(AlertListActivity.this);
+            final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
+            final EditText inputStore = layout.findViewById(R.id.add_store);
             inputItem.setHint(R.string.what);
-            inputItem.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-            layoutItem.addView(inputItem);
-
-            TextInputLayout layoutStore = new TextInputLayout(AlertListActivity.this);
-            final EditText inputStore = new EditText(AlertListActivity.this);
-            inputStore.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             inputStore.setHint(R.string.where);
-            layoutStore.addView(inputStore);
 
-            layout.addView(layoutItem);
-            layout.addView(layoutStore);
-            builder.setView(layout);
-            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            ArrayAdapter autocompleteItemAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel);
+            inputItem.setAdapter(autocompleteItemAdapter);
+            inputItem.setThreshold(2);
+            inputItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String item = parent.getItemAtPosition(position).toString();
+                    inputItem.setText(item);
+                    inputStore.setText(redAlertViewModel.selectStoresByItem(item));
+                }
+            });
+
+
+
+            dialogBuilder.setView(layout);
+            dialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
@@ -198,14 +204,15 @@ public class AlertListActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
             });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                 }
             });
+            //alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-            builder.show();
+            dialogBuilder.show();
         }
     }
 }

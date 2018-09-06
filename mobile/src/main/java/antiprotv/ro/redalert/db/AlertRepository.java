@@ -20,7 +20,15 @@ public class AlertRepository {
     LiveData<List<Alert>> getAllAlerts() {
         return allAlerts;
     }
-
+    List<String> getItemsByPrefix(String prefix) {
+        return alertDao.getItemsByPrefix(prefix);
+    }
+    List<String> getStoresByPrefix(String prefix) {
+        return alertDao.getStoresByPrefix(prefix);
+    }
+    List<String> getStoresByItem(String item) {
+        return alertDao.selectStoresByItem(item);
+    }
     public void insert(Alert alert) {
         new insertAsyncTask(alertDao).execute(alert);
     }
@@ -37,6 +45,20 @@ public class AlertRepository {
         if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.YELLOW_ALERT) {
             alert.setLevel(level);
             new updateAsyncTask(alertDao).execute(alert);
+        }
+    }
+
+    private static class retrieveAsyncTask extends AsyncTask<String, Void, Void> {
+        private AlertDao mAsyncTaskDao;
+
+        insertAsyncTask(AlertDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Alert... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
         }
     }
 
