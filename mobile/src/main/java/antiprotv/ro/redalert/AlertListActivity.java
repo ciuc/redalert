@@ -176,11 +176,11 @@ public class AlertListActivity extends AppCompatActivity {
             LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
             final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
-            final EditText inputStore = layout.findViewById(R.id.add_store);
+            final AutoCompleteTextView inputStore = layout.findViewById(R.id.add_store);
             inputItem.setHint(R.string.what);
             inputStore.setHint(R.string.where);
 
-            ArrayAdapter autocompleteItemAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel);
+            ArrayAdapter autocompleteItemAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, true);
             inputItem.setAdapter(autocompleteItemAdapter);
             inputItem.setThreshold(2);
             inputItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -189,9 +189,12 @@ public class AlertListActivity extends AppCompatActivity {
                     String item = parent.getItemAtPosition(position).toString();
                     inputItem.setText(item);
                     inputStore.setText(redAlertViewModel.selectStoresByItem(item));
+                    inputStore.setSelectAllOnFocus(true);
                 }
             });
 
+            ArrayAdapter autocompleteStoreAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, false);
+            inputStore.setAdapter(autocompleteStoreAdapter);
 
 
             dialogBuilder.setView(layout);

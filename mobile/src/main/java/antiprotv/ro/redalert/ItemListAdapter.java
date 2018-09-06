@@ -21,13 +21,16 @@ public class ItemListAdapter extends ArrayAdapter<String> {
     private int itemLayout;
     private ItemListAdapter.ListFilter listFilter = new ItemListAdapter.ListFilter();
     private RedAlertViewModel redAlertViewModel;
+    //we do this either for an item or a store
+    private boolean isItem;
 
-    public ItemListAdapter(Context context, int resource, List<String> itemDataLst, RedAlertViewModel redAlertViewModel) {
+    public ItemListAdapter(Context context, int resource, List<String> itemDataLst, RedAlertViewModel redAlertViewModel, boolean isItem) {
         super(context, resource);
         this.dataList = itemDataLst;
         this.context = context;
         this.itemLayout = resource;
         this.redAlertViewModel = redAlertViewModel;
+        this. isItem = isItem;
     }
 
     @Override
@@ -62,8 +65,14 @@ public class ItemListAdapter extends ArrayAdapter<String> {
                 final String searchStrLowerCase = prefix.toString().toLowerCase()+"%";
 
                 //Call to database to get matching records using room
-                List<String> matchValues =
-                        redAlertViewModel.selectItems(searchStrLowerCase);
+                List<String> matchValues;
+                if (isItem) {
+                    matchValues =
+                            redAlertViewModel.selectItems(searchStrLowerCase);
+                } else {
+                    matchValues =
+                            redAlertViewModel.selectStores(searchStrLowerCase);
+                }
                 results.values = matchValues;
                 results.count = matchValues.size();
             }

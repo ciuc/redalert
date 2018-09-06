@@ -58,4 +58,5 @@ public class RedAlertViewModel extends AndroidViewModel {
         }
         return "";
     }
+
 }

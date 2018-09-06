@@ -3,7 +3,7 @@ package antiprotv.ro.redalert;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class ManageItemActivity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
