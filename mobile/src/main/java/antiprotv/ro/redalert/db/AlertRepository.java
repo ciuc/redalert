@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AlertRepository {
 
@@ -20,15 +21,24 @@ public class AlertRepository {
     LiveData<List<Alert>> getAllAlerts() {
         return allAlerts;
     }
+
     List<String> getItemsByPrefix(String prefix) {
         return alertDao.getItemsByPrefix(prefix);
     }
+
     List<String> getStoresByPrefix(String prefix) {
         return alertDao.getStoresByPrefix(prefix);
     }
+
     List<String> getStoresByItem(String item) {
-        return alertDao.selectStoresByItem(item);
+        retrieveStoreAsyncTask task = new retrieveStoreAsyncTask(alertDao);
+        try {
+            return task.execute(item).get();
+        }catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
     }
+
     public void insert(Alert alert) {
         new insertAsyncTask(alertDao).execute(alert);
     }
@@ -48,17 +58,17 @@ public class AlertRepository {
         }
     }
 
-    private static class retrieveAsyncTask extends AsyncTask<String, Void, Void> {
+    private static class retrieveStoreAsyncTask extends AsyncTask<String, Void, List<String>> {
         private AlertDao mAsyncTaskDao;
 
-        insertAsyncTask(AlertDao dao) {
+        retrieveStoreAsyncTask(AlertDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(final Alert... params) {
-            mAsyncTaskDao.insert(params[0]);
-            return null;
+        protected List<String> doInBackground(final String... items) {
+            return mAsyncTaskDao.selectStoresByItem(items[0]);
+
         }
     }
 
