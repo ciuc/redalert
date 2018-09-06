@@ -52,7 +52,7 @@ public class AlertRepository {
     }
 
     public void update(Alert alert, int level) {
-        if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.YELLOW_ALERT) {
+        if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.YELLOW_ALERT || level == Alert.GREEN_ALERT) {
             alert.setLevel(level);
             new updateAsyncTask(alertDao).execute(alert);
         }

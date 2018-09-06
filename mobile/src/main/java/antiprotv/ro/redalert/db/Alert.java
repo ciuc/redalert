@@ -15,6 +15,8 @@ public class Alert {
     public static final int RED_ALERT = 1;
     public static final int ORANGE_ALERT = 2;
     public static final int YELLOW_ALERT = 3;
+    //as if it was disabled
+    public static final int GREEN_ALERT = 0;
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;

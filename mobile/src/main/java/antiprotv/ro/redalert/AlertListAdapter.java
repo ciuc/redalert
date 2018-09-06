@@ -55,10 +55,6 @@ public class AlertListAdapter extends RecyclerView.Adapter {
         if (alerts != null) {
             Alert alert = alerts.get(position);
             holder.alert = alert;
-            //View listItemView = holder.view;
-            //holder.view.setBackgroundColor(res.getColor(alert.getColor()));
-            //((GradientDrawable)holder.view.getBackground().getCurrent()).setColor(res.getColor(alert.getColor()));
-            //((GradientDrawable)listItemView.getBackground().getCurrent()).setStroke(0,res.getColor(alert.getColor()));
             holder.iconView.setColorFilter(res.getColor(alert.getColor()));
             holder.itemView.setText(alert.getItem());
             holder.itemView.setTextColor(res.getColor(alert.getColor()));
@@ -149,7 +145,7 @@ public class AlertListAdapter extends RecyclerView.Adapter {
                         Toast.makeText(v.getContext(), "NOT IMPLEMENTED YET. Please remove and create again.", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        viewModel.removeAlert(this.alert);
+                        viewModel.changeLevel(alert, Alert.GREEN_ALERT);
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(view.getContext());
                         notificationManager.cancel(this.alert.getId());
                         break;

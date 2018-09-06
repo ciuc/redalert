@@ -15,7 +15,7 @@ public abstract class AlertDao {
     @Insert
     public abstract void insert(Alert alert);
 
-    @Query("select * from alert order by level asc")
+    @Query("select * from alert where level != 0 order by level asc")
     public abstract LiveData<List<Alert>> getAllAlerts();
 
     @Query("delete from alert")
