@@ -15,34 +15,39 @@ public class Alert {
     public static final int RED_ALERT = 1;
     public static final int ORANGE_ALERT = 2;
     public static final int YELLOW_ALERT = 3;
-
-    @IntDef({RED_ALERT, ORANGE_ALERT, YELLOW_ALERT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface AlertLevel{}
-
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;
-
     @NonNull
     private int level;
-
     @NonNull
     private String item;
+    private String store;
+
+    public Alert(@NonNull int level, @NonNull String item, String store) {
+        this.level = level;
+        this.item = item;
+        this.store = store;
+    }
+
+    public static String getColor(int level) {
+        if (level == RED_ALERT) {
+            return "red";
+        }
+        if (level == YELLOW_ALERT) {
+            return "yellow";
+        }
+        if (level == ORANGE_ALERT) {
+            return "orange";
+        }
+        return "yellow";
+    }
 
     public String getStore() {
         return store;
     }
 
     public void setStore(String store) {
-        this.store = store;
-    }
-
-    private String store;
-
-    public Alert(@NonNull int level, @NonNull String item, String store){
-        this.level = level;
-        this.item = item;
         this.store = store;
     }
 
@@ -62,9 +67,14 @@ public class Alert {
     public void setItem(@NonNull String item) {
         this.item = item;
     }
+
     @NonNull
     public int getLevel() {
         return level;
+    }
+
+    public void setLevel(@NonNull int level) {
+        this.level = level;
     }
 
     public int getColor() {
@@ -93,20 +103,8 @@ public class Alert {
         return R.drawable.ic_warning_red_24dp;
     }
 
-    public static String getColor(int level){
-        if (level == RED_ALERT) {
-            return "red";
-        }
-        if (level == YELLOW_ALERT) {
-            return "yellow";
-        }
-        if (level == ORANGE_ALERT) {
-            return "orange";
-        }
-        return "yellow";
-    }
-
-    public void setLevel(@NonNull int level) {
-        this.level = level;
+    @IntDef({RED_ALERT, ORANGE_ALERT, YELLOW_ALERT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AlertLevel {
     }
 }

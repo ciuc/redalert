@@ -4,7 +4,7 @@
     <string name="channel_name">Red Alert APP notification channel</string>
     <string name="channel_group_name">Red Alert APP notification channel group</string>
     <string name="channel_description">Notifications from Red Alert list app</string>
-    <string name="no_alerts">You have no alerts. Looks like you have everything covered ;)</string>
+    <string name="no_alerts">You have no alerts. Looks like you\'ve got everything covered ;)</string>
     <string name= "what">WHAT:</string>
     <string name= "where">WHERE FROM:</string>
 </resources>

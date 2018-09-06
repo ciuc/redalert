@@ -6,17 +6,16 @@ import android.support.annotation.NonNull;
 
 @Entity(tableName = "item")
 public class Item {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;
     @NonNull
     private String name;
 
 
-
     private String store;
 
-    public Item(@NonNull int id, String name, String store){
+    public Item(@NonNull int id, String name, String store) {
         this.id = id;
         this.name = name;
         this.store = store;

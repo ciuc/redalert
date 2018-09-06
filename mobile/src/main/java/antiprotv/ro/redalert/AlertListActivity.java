@@ -6,13 +6,11 @@ import android.app.NotificationManager;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -21,13 +19,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,8 +33,8 @@ import antiprotv.ro.redalert.db.RedAlertViewModel;
 
 public class AlertListActivity extends AppCompatActivity {
     public static final String RED_ALERT_CHANNEL = "RED_ALERT_CHANNEL";
-    private RedAlertViewModel redAlertViewModel;
     AlertListAdapter adapter;
+    private RedAlertViewModel redAlertViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class AlertListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
-        adapter= new AlertListAdapter(this, redAlertViewModel);
+        adapter = new AlertListAdapter(this, redAlertViewModel);
         LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
         final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
         final TextView noAlertsView = findViewById(R.id.empty_view);
@@ -110,7 +106,7 @@ public class AlertListActivity extends AppCompatActivity {
     }
 
     private void setNotifications(List<Alert> alerts) {
-        if (alerts !=null) {
+        if (alerts != null) {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             for (Alert alert : alerts) {
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, RED_ALERT_CHANNEL)
@@ -129,6 +125,40 @@ public class AlertListActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.cancelAll();
     }
+
+    private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
+        if (alerts != null && !alerts.isEmpty()) {
+            recyclerView.setVisibility(View.VISIBLE);
+            noAlertsView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            noAlertsView.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_alert_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private class AddAlertClickListener implements View.OnClickListener {
         private int level;
 
@@ -168,7 +198,7 @@ public class AlertListActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
             });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -177,38 +207,5 @@ public class AlertListActivity extends AppCompatActivity {
 
             builder.show();
         }
-    }
-
-    private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
-        if (alerts != null && !alerts.isEmpty()) {
-            recyclerView.setVisibility(View.VISIBLE);
-            noAlertsView.setVisibility(View.GONE);
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            noAlertsView.setVisibility(View.VISIBLE);
-
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_alert_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

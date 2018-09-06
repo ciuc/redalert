@@ -12,9 +12,6 @@ import android.support.annotation.NonNull;
 @Database(entities = {Item.class, Alert.class}, version = 1)
 public abstract class RedalertRoomDatabase extends RoomDatabase {
 
-    public abstract ItemDao itemDao();
-    public abstract AlertDao alertDao();
-
     private static RedalertRoomDatabase INSTANCE;
 
     public static RedalertRoomDatabase getDatabase(final Context context) {
@@ -30,6 +27,9 @@ public abstract class RedalertRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    public abstract ItemDao itemDao();
+
+    public abstract AlertDao alertDao();
 
     @NonNull
     @Override

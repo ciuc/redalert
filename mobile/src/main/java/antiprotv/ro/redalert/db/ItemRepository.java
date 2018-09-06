@@ -17,7 +17,7 @@ public class ItemRepository {
         allItems = itemDao.getAllItems();
     }
 
-    LiveData<List<Item>> getAllItems(){
+    LiveData<List<Item>> getAllItems() {
         return allItems;
     }
 
