@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package ro.antiprotv.redalert;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

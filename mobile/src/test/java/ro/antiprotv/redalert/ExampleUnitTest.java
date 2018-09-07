@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package ro.antiprotv.redalert;
 
 import org.junit.Test;
 

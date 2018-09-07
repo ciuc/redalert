@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package ro.antiprotv.redalert;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -30,8 +30,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import antiprotv.ro.redalert.db.Alert;
-import antiprotv.ro.redalert.db.RedAlertViewModel;
+import ro.antiprotv.redalert.db.Alert;
+import ro.antiprotv.redalert.db.RedAlertViewModel;
 
 /**
  * The main activity (entry point) of the Red Alert! app

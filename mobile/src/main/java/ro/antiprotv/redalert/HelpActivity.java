@@ -2,7 +2,7 @@
  * Copyright Cristian "ciuc" Starasciuc 2016
  * cristi.ciuc@gmail.com
  */
-package antiprotv.ro.redalert;
+package ro.antiprotv.redalert;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert.db;
+package ro.antiprotv.redalert.db;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import antiprotv.ro.redalert.R;
+import ro.antiprotv.redalert.R;
 
 @Entity(tableName = "alert")
 public class Alert {

@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert;
+package ro.antiprotv.redalert;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,8 +18,8 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.logging.Logger;
 
-import antiprotv.ro.redalert.db.Alert;
-import antiprotv.ro.redalert.db.RedAlertViewModel;
+import ro.antiprotv.redalert.db.Alert;
+import ro.antiprotv.redalert.db.RedAlertViewModel;
 
 /**
  * The list adapter used by the RecyclerView.

@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert.db;
+package ro.antiprotv.redalert.db;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -8,7 +8,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import java.util.List;
 
-import antiprotv.ro.redalert.AlertListActivity;
+import ro.antiprotv.redalert.AlertListActivity;
 
 public class RedAlertViewModel extends AndroidViewModel {
     private ItemRepository itemRepository;

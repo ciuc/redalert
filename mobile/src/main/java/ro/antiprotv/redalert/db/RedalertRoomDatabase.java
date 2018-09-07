@@ -1,4 +1,4 @@
-package antiprotv.ro.redalert.db;
+package ro.antiprotv.redalert.db;
 
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.Database;
