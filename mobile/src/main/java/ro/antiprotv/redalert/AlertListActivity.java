@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +168,7 @@ public class AlertListActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
-            dialogBuilder.setTitle(getString(R.string.add_new_alert, Alert.getColor(level).toUpperCase()));
+            dialogBuilder.setTitle(getString(R.string.add_new_alert, getResources().getString(Alert.getColor(level)).toUpperCase()));
             LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
             final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
@@ -197,9 +198,15 @@ public class AlertListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
-                    Alert alert = new Alert(level, inputItem.getText().toString(), inputStore.getText().toString());
-                    vm.insert(alert);
-                    adapter.notifyDataSetChanged();
+                    if (inputItem.getText().toString().trim().isEmpty()
+                            && inputStore.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(AlertListActivity.this, R.string.empty_alert, Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    } else {
+                        Alert alert = new Alert(level, inputItem.getText().toString().trim(), inputStore.getText().toString().trim());
+                        vm.insert(alert);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             });
             dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

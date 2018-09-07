@@ -21,7 +21,7 @@ public abstract class AlertDao {
     @Query("select * from alert where level != 0 order by level asc")
     public abstract LiveData<List<Alert>> getAllAlerts();
 
-    @Query("delete from alert")
+    @Query("update alert set level = 0")
     public abstract void removeAll();
 
     @Delete

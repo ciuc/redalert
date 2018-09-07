@@ -106,27 +106,27 @@ public class AlertListAdapter extends RecyclerView.Adapter {
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             //super.onCreateContextMenu(menu, v, menuInfo);
             menu.setHeaderTitle("Select The Action");
-            MenuItem edit = menu.add(Menu.NONE, 1, 1, "Edit this alert");
-            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Delete this alert");
+            MenuItem edit = menu.add(Menu.NONE, 1, 1, R.string.edit);
+            MenuItem delete = menu.add(Menu.NONE, 2, 2, R.string.delete);
             Alert alert = this.alert;
             MenuItem makeRed;
             MenuItem makeYellow;
             MenuItem makeOrange;
             if (alert.getLevel() == Alert.RED_ALERT) {
-                makeOrange = menu.add(Menu.NONE, 3, 3, "Make Orange");
-                makeYellow = menu.add(Menu.NONE, 4, 4, "Make Yellow");
+                makeOrange = menu.add(Menu.NONE, 3, 3, R.string.make_orange);
+                makeYellow = menu.add(Menu.NONE, 4, 4, R.string.make_yellow);
                 makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
                 makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }
             if (alert.getLevel() == Alert.ORANGE_ALERT) {
-                makeRed = menu.add(Menu.NONE, 5, 3, "Make Red");
-                makeYellow = menu.add(Menu.NONE, 4, 4, "Make Yellow");
+                makeRed = menu.add(Menu.NONE, 5, 3, R.string.make_red);
+                makeYellow = menu.add(Menu.NONE, 4, 4, R.string.make_yellow);
                 makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
                 makeYellow.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }
             if (alert.getLevel() == Alert.YELLOW_ALERT) {
-                makeRed = menu.add(Menu.NONE, 5, 3, "Make Red");
-                makeOrange = menu.add(Menu.NONE, 3, 4, "Make Orange");
+                makeRed = menu.add(Menu.NONE, 5, 3, R.string.make_red);
+                makeOrange = menu.add(Menu.NONE, 3, 4, R.string.make_orange);
                 makeOrange.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
                 makeRed.setOnMenuItemClickListener(new OnClickMenu(this.alert, v));
             }

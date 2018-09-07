@@ -9,7 +9,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Item.class, Alert.class}, version = 1)
+@Database(entities = {Alert.class}, version = 1)
 public abstract class RedalertRoomDatabase extends RoomDatabase {
 
     private static RedalertRoomDatabase INSTANCE;
@@ -26,8 +26,6 @@ public abstract class RedalertRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
-    public abstract ItemDao itemDao();
 
     public abstract AlertDao alertDao();
 

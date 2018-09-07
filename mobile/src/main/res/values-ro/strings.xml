@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Red Alert!</string>
+    <string name="where">DE UNDE:</string>
+    <string name="add">Adaugă</string>
+    <string name="cancel">Închide</string>
+    <string name="ok">Ok</string>
+    <string name="back">Înapoi</string>
+    <string name="from">DE LA: %1$s</string>
+    <string name="add_new_alert">Adaugă o alertă nouă: %1$s</string>
+    <string name="interogative_remove_all_alert">Ești sigur că vrei să ștergi toate alertele?</string>
+    <string name="title_alert_list">Red Alert! - Alertele mele</string>
+    <string name="title_about">Red Alert! - Despre</string>
+    <string name="title_help">Red Alert! - Ajutor</string>
+    <string name="action_about">Despre</string>
+    <string name="action_help">Ajutor</string>
+    <string name="no_alerts">Nu ai nicio alertă. Se pare că ești acoperit ;)</string>
+    <string name="empty_alert">Trebuie să pui măcar unul din cele două câmpuri...</string>
+    <string name="what">CE:</string>
+
+    <string name="red">roșie</string>
+    <string name="orange">portocalie</string>
+    <string name="yellow">galbenă</string>
+
+    <string name="delete">Șterge aceasă alertă</string>
+    <string name="edit">Editează această alertă</string>
+    <string name="make_red">Fă alerta ROȘIE</string>
+    <string name="make_orange">Fă alerta PORTOCALIE</string>
+    <string name="make_yellow">Fă alerta GALBENĂ</string>
+
+    <string name="about.text"><![CDATA[
+    <h1>Red Alert - shopping priority list<h1>
+<p>This simple app allows you to set alerts for things you need to buy so you don\'t forget.
+The alerts will show up as notifications in your phones' bar and on the lock screen.</p>
+]]>
+    </string>
+    <string name="help.text"><![CDATA[
+<p><b>Alert levels (colors)</b></p>
+<p>Each alert has a level (color). The colors are used to order them - red - orange - yellow.
+For instance use a red alert for something you urgently need (you\'ve just ran out of toothpaste),
+an orange one for something you\'ll need in the near future (you\'ve just opened the last box of cereals)
+and a yellow alert for that spare light bulb you know you\'ll need someday.</p>
+<p><b>Adding an alert</b></p>
+Simply click on one of the buttons which coresponds to the desired color and fill in the name of the item that you need
+and the name of the store that you find that item.<br>
+The app will autocomplete the item name based on the previous alerts you had.
+<p><b>Removing/editing an alert</b></p>
+<p>Long click on one alert and it will open a context menu. Choose the desired action:
+<br>
+- Delete - removes the alert and the notification<br>
+- Make red/orange/yellow - change the alert level<br>
+</p>
+<p><b>Removing all alerts</b></p>
+<p>Click on the button on lower right corner and choose OK when the dialog shows up.</p>
+<p><b>Autocomplete</b></p>
+<p>The app keeps a list of the previous alerts and it will autocomplete the item as you type. Once you decide to choose an item from the
+suggestions, it will autocomplete the store name based on some criteria. You can always ovewrite the store name with something else.</p>
+]]>
+    </string>
+</resources>
