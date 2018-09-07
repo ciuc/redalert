@@ -50,12 +50,12 @@ public class AlertListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         notificationManager = NotificationManagerCompat.from(this);
-
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter = new AlertListAdapter(this, redAlertViewModel);
-        LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
         final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
         final TextView noAlertsView = findViewById(R.id.empty_view);
+
+        LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
 
         toggleAlertListVisibility(alerts.getValue(), recyclerView, noAlertsView);
 
@@ -75,22 +75,12 @@ public class AlertListActivity extends AppCompatActivity {
         addOrangeFab.setOnClickListener(new AddAlertClickListener(Alert.ORANGE_ALERT));
         FloatingActionButton addYellowFab = (FloatingActionButton) findViewById(R.id.add_yellow);
         addYellowFab.setOnClickListener(new AddAlertClickListener(Alert.YELLOW_ALERT));
-
+        FloatingActionButton removeAllFab = (FloatingActionButton) findViewById(R.id.remove_all);
+        removeAllFab.setOnClickListener(new RemoveAllAlertsClickListener());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton removeAllFab = (FloatingActionButton) findViewById(R.id.remove_all);
-        removeAllFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redAlertViewModel.removeAllAlerts();
-                adapter.setAlerts(null);
-                adapter.notifyDataSetChanged();
-                removeAllNotifications();
-                toggleAlertListVisibility(null, recyclerView, noAlertsView);
-            }
-        });
         createNotificationChannel();
     }
 
@@ -115,6 +105,12 @@ public class AlertListActivity extends AppCompatActivity {
         notificationManager.cancelAll();
     }
 
+    /**
+     * this displays the "empty" view if there are no alerts, and hides it if there are alerts.
+     * @param alerts
+     * @param recyclerView
+     * @param noAlertsView
+     */
     private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
         if (alerts != null && !alerts.isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -122,7 +118,6 @@ public class AlertListActivity extends AppCompatActivity {
         } else {
             recyclerView.setVisibility(View.GONE);
             noAlertsView.setVisibility(View.VISIBLE);
-
         }
     }
 
@@ -158,7 +153,7 @@ public class AlertListActivity extends AppCompatActivity {
     }
 
     /**
-     * The click listener that creates the alert dialog.
+     * The click listener that creates the alert dialog to add alerts.
      * It takes the alert level (color) as a param to know what it needs to add.
      * The dialog itself has the logic of autocomplete.
      */
@@ -217,5 +212,31 @@ public class AlertListActivity extends AppCompatActivity {
 
             dialogBuilder.show();
         }
+    }
+
+    private class RemoveAllAlertsClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
+            dialogBuilder.setTitle(getString(R.string.interogative_remove_all_alert));
+            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            dialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface v, int which) {
+                    redAlertViewModel.removeAllAlerts();
+                    adapter.setAlerts(null);
+                    adapter.notifyDataSetChanged();
+                    removeAllNotifications();
+                }
+            });
+            dialogBuilder.show();
+        }
+
     }
 }
