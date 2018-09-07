@@ -4,6 +4,7 @@
  */
 package ro.antiprotv.redalert;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -19,6 +20,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         TextView foo = (TextView) findViewById(R.id.aboutText);
         foo.setText(Html.fromHtml(getString(R.string.about_text)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.red)));
     }
 
     @Override

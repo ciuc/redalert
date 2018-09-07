@@ -4,6 +4,7 @@
  */
 package ro.antiprotv.redalert;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -16,9 +17,10 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_help);
         TextView foo = (TextView) findViewById(R.id.helpText);
         foo.setText(Html.fromHtml(getString(R.string.help_text)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.red)));
     }
 
     @Override

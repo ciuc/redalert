@@ -138,13 +138,13 @@ public class AlertListActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
             Intent about = new Intent();
-            about.setClassName(this, "antiprotv.ro.redalert.AboutActivity");
+            about.setClassName(this, "ro.antiprotv.redalert.AboutActivity");
             startActivity(about);
             return true;
         }
         if (id == R.id.action_help) {
             Intent about = new Intent();
-            about.setClassName(this, "antiprotv.ro.redalert.AboutActivity");
+            about.setClassName(this, "ro.antiprotv.redalert.HelpActivity");
             startActivity(about);
             return true;
         }
