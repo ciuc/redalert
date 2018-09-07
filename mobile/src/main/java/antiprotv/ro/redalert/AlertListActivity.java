@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +24,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,9 +33,13 @@ import java.util.List;
 import antiprotv.ro.redalert.db.Alert;
 import antiprotv.ro.redalert.db.RedAlertViewModel;
 
+/**
+ * The main activity (entry point) of the Red Alert! app
+ */
 public class AlertListActivity extends AppCompatActivity {
     public static final String RED_ALERT_CHANNEL = "RED_ALERT_CHANNEL";
     AlertListAdapter adapter;
+    NotificationManagerCompat notificationManager;
     private RedAlertViewModel redAlertViewModel;
 
     @Override
@@ -45,8 +47,10 @@ public class AlertListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
+
+        notificationManager = NotificationManagerCompat.from(this);
+
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter = new AlertListAdapter(this, redAlertViewModel);
         LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
@@ -59,10 +63,8 @@ public class AlertListActivity extends AppCompatActivity {
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
             @Override
             public void onChanged(@Nullable final List<Alert> alerts) {
-                // Update the cached copy of the words in the adapter.
                 adapter.setAlerts(alerts);
                 adapter.notifyDataSetChanged();
-                setNotifications(alerts);
                 toggleAlertListVisibility(alerts, recyclerView, noAlertsView);
             }
         });
@@ -90,7 +92,6 @@ public class AlertListActivity extends AppCompatActivity {
             }
         });
         createNotificationChannel();
-        setNotifications(alerts.getValue());
     }
 
     private void createNotificationChannel() {
@@ -109,24 +110,8 @@ public class AlertListActivity extends AppCompatActivity {
         }
     }
 
-    private void setNotifications(List<Alert> alerts) {
-        if (alerts != null) {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            for (Alert alert : alerts) {
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, RED_ALERT_CHANNEL)
-                        .setSmallIcon(alert.getIcon())
-                        .setContentTitle(alert.getItem())
-                        .setContentText(alert.getStore())
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                        .setColor(getResources().getColor(alert.getColor()));
-                notificationManager.notify(alert.getId(), mBuilder.build());
-            }
-        }
-    }
-
     private void removeAllNotifications() {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager = NotificationManagerCompat.from(this);
         notificationManager.cancelAll();
     }
 
@@ -172,6 +157,11 @@ public class AlertListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * The click listener that creates the alert dialog.
+     * It takes the alert level (color) as a param to know what it needs to add.
+     * The dialog itself has the logic of autocomplete.
+     */
     private class AddAlertClickListener implements View.OnClickListener {
         private int level;
 

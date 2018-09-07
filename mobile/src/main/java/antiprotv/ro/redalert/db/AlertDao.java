@@ -9,11 +9,14 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+/**
+ * The ROOM alert DAO
+ */
 @Dao
 public abstract class AlertDao {
 
     @Insert
-    public abstract void insert(Alert alert);
+    public abstract long insert(Alert alert);
 
     @Query("select * from alert where level != 0 order by level asc")
     public abstract LiveData<List<Alert>> getAllAlerts();

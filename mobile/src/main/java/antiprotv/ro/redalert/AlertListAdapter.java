@@ -21,6 +21,11 @@ import java.util.logging.Logger;
 import antiprotv.ro.redalert.db.Alert;
 import antiprotv.ro.redalert.db.RedAlertViewModel;
 
+/**
+ * The list adapter used by the RecyclerView.
+ * It deals with the display of the alerts into the layout,
+ * the creation of the alert context menu - together with the handling of the action clicks
+ */
 public class AlertListAdapter extends RecyclerView.Adapter {
     private final LayoutInflater inflater;
     Logger logger = Logger.getLogger(AlertListAdapter.class.getName());

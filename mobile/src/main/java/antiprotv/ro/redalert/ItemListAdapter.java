@@ -15,6 +15,11 @@ import java.util.List;
 import antiprotv.ro.redalert.db.Alert;
 import antiprotv.ro.redalert.db.RedAlertViewModel;
 
+/**
+ * The adapter used for the autocomplete operations.
+ * It is usable by either ITEM or STORE text areas autocomplete.
+ * It performs db operations to retrieve results when the user inputs something.
+ */
 public class ItemListAdapter extends ArrayAdapter<String> {
     private List<String> dataList;
     private Context context;

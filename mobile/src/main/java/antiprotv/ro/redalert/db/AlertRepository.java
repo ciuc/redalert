@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * The ROOM alert repo
+ */
 public class AlertRepository {
 
     private AlertDao alertDao;
@@ -34,13 +37,18 @@ public class AlertRepository {
         retrieveStoreAsyncTask task = new retrieveStoreAsyncTask(alertDao);
         try {
             return task.execute(item).get();
-        }catch (ExecutionException | InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             return null;
         }
     }
 
-    public void insert(Alert alert) {
-        new insertAsyncTask(alertDao).execute(alert);
+    public long insert(Alert alert) {
+        insertAsyncTask task = new insertAsyncTask(alertDao);
+        try {
+            return task.execute(alert).get();
+        } catch (ExecutionException | InterruptedException e) {
+            return 0l;
+        }
     }
 
     public void removeAll() {
@@ -72,7 +80,7 @@ public class AlertRepository {
         }
     }
 
-    private static class insertAsyncTask extends AsyncTask<Alert, Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<Alert, Void, Long> {
         private AlertDao mAsyncTaskDao;
 
         insertAsyncTask(AlertDao dao) {
@@ -80,9 +88,8 @@ public class AlertRepository {
         }
 
         @Override
-        protected Void doInBackground(final Alert... params) {
-            mAsyncTaskDao.insert(params[0]);
-            return null;
+        protected Long doInBackground(final Alert... params) {
+            return mAsyncTaskDao.insert(params[0]);
         }
     }
 

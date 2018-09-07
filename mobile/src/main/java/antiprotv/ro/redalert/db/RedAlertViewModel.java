@@ -3,8 +3,12 @@ package antiprotv.ro.redalert.db;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 
 import java.util.List;
+
+import antiprotv.ro.redalert.AlertListActivity;
 
 public class RedAlertViewModel extends AndroidViewModel {
     private ItemRepository itemRepository;
@@ -34,7 +38,16 @@ public class RedAlertViewModel extends AndroidViewModel {
     }
 
     public void insert(Alert alert) {
-        alertRepository.insert(alert);
+        long id = alertRepository.insert(alert);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
+                .setSmallIcon(alert.getIcon())
+                .setContentTitle(alert.getItem())
+                .setContentText(alert.getStore())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColor(getApplication().getResources().getColor(alert.getColor()));
+        notificationManager.notify((int) id, mBuilder.build());
     }
 
     public void removeAllAlerts() {
