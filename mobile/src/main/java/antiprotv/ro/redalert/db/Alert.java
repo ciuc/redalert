@@ -93,16 +93,16 @@ public class Alert {
     }
 
     public int getIcon() {
-        if (level == RED_ALERT) {
+        /*if (level == RED_ALERT) {
             return R.drawable.ic_warning_red_24dp;
         }
         if (level == YELLOW_ALERT) {
-            return R.drawable.ic_warning_yellow_24dp;
+            return R.drawable.ic_warning_red_24dp;
         }
         if (level == ORANGE_ALERT) {
-            return R.drawable.ic_warning_orange_24dp;
-        }
-        return R.drawable.ic_warning_red_24dp;
+            return R.drawable.ic_warning_red_24dp;
+        }*/
+        return R.drawable.ic_priority_high_black_24dp;
     }
 
     @IntDef({RED_ALERT, ORANGE_ALERT, YELLOW_ALERT})

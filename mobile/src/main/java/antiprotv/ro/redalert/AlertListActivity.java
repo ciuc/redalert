@@ -182,7 +182,7 @@ public class AlertListActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
-            dialogBuilder.setTitle("Add New Alert: " + Alert.getColor(level).toUpperCase());
+            dialogBuilder.setTitle(getString(R.string.add_new_alert, Alert.getColor(level).toUpperCase()));
             LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
             final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
@@ -208,7 +208,7 @@ public class AlertListActivity extends AppCompatActivity {
 
 
             dialogBuilder.setView(layout);
-            dialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            dialogBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
@@ -217,7 +217,7 @@ public class AlertListActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
             });
-            dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();

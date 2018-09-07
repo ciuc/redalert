@@ -55,11 +55,12 @@ public class AlertListAdapter extends RecyclerView.Adapter {
         if (alerts != null) {
             Alert alert = alerts.get(position);
             holder.alert = alert;
+            holder.iconView.setImageResource(alert.getIcon());
             holder.iconView.setColorFilter(res.getColor(alert.getColor()));
             holder.itemView.setText(alert.getItem());
             holder.itemView.setTextColor(res.getColor(alert.getColor()));
             if (alert.getStore() != null && !alert.getStore().equals("")) {
-                holder.storeView.setText("FROM: " + alert.getStore());
+                holder.storeView.setText(holder.view.getContext().getString(R.string.from, alert.getStore()));
             } else {
                 holder.storeView.setText("");
             }
