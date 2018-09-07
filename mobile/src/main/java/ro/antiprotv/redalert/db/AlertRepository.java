@@ -18,7 +18,7 @@ public class AlertRepository {
     public AlertRepository(Application app) {
         RedalertRoomDatabase db = RedalertRoomDatabase.getDatabase(app);
         alertDao = db.alertDao();
-        allAlerts = alertDao.getAllAlerts();
+        allAlerts = alertDao.getAllActiveAlerts();
     }
 
     LiveData<List<Alert>> getAllAlerts() {
@@ -87,8 +87,23 @@ public class AlertRepository {
             mAsyncTaskDao = dao;
         }
 
+        /*
+        We check if there is already a disabled alert with the same item and store
+        If so, we enable(update) that one, instead of creating a new one.
+        If not, we create.
+         */
         @Override
         protected Long doInBackground(final Alert... params) {
+            Alert newAlert = params[0];
+            List<Alert> alerts = mAsyncTaskDao.getAllDisabledAlertsSync();
+            for (Alert alert : alerts) {
+                if (newAlert.getItem().equals(alert.getItem())
+                        && newAlert.getStore().equals(alert.getStore())) {
+                    alert.setLevel(newAlert.getLevel());
+                    mAsyncTaskDao.updateAlerts(alert);
+                    return alert.getId();
+                }
+            }
             return mAsyncTaskDao.insert(params[0]);
         }
     }

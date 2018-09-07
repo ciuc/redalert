@@ -16,10 +16,11 @@ public class Alert {
     public static final int ORANGE_ALERT = 2;
     public static final int YELLOW_ALERT = 3;
     //as if it was disabled
+    //we do not delete alerts so we can use them for autocompletion
     public static final int GREEN_ALERT = 0;
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private int id;
+    private long id;
     @NonNull
     private int level;
     @NonNull
@@ -53,11 +54,11 @@ public class Alert {
         this.store = store;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -103,10 +104,5 @@ public class Alert {
             return R.drawable.ic_warning_red_24dp;
         }*/
         return R.drawable.ic_priority_high_black_24dp;
-    }
-
-    @IntDef({RED_ALERT, ORANGE_ALERT, YELLOW_ALERT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface AlertLevel {
     }
 }

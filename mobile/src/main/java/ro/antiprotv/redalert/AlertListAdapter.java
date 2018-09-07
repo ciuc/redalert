@@ -153,7 +153,7 @@ public class AlertListAdapter extends RecyclerView.Adapter {
                     case 2:
                         viewModel.changeLevel(alert, Alert.GREEN_ALERT);
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(view.getContext());
-                        notificationManager.cancel(this.alert.getId());
+                        notificationManager.cancel((int) this.alert.getId());
                         break;
                     case 3:
                         viewModel.changeLevel(alert, Alert.ORANGE_ALERT);

@@ -31,7 +31,9 @@
     <string name="about.text"><![CDATA[
     <h1>Red Alert - shopping priority list<h1>
 <p>This simple app allows you to set alerts for things you need to buy so you don\'t forget.
-The alerts will show up as notifications in your phones' bar and on the lock screen.</p>
+The alerts will show up as notifications in your phones\' bar and on the lock screen and will stay there until you
+remove the notification or the alert itself.</p>
+<p>I hope you find this useful, I certainly do :)</p>
 ]]>
     </string>
     <string name="help.text"><![CDATA[
