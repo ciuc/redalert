@@ -18,9 +18,11 @@
         android:typeface="monospace"
         android:scrollbars = "vertical"
         android:textIsSelectable="true"/>
-    <android.support.design.button.MaterialButton
+    <Button
+        android:id="@+id/about_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@string/title_alert_list"
-        android:text="@string/title_alert_list"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/aboutText"
+        android:text="@string/back"/>
 </RelativeLayout>

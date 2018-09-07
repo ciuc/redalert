@@ -4,10 +4,13 @@
  */
 package ro.antiprotv.redalert;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -21,6 +24,15 @@ public class HelpActivity extends AppCompatActivity {
         TextView foo = (TextView) findViewById(R.id.helpText);
         foo.setText(Html.fromHtml(getString(R.string.help_text)));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.red)));
+        Button back = findViewById(R.id.help_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent list = new Intent();
+                list.setClassName(HelpActivity.this, "ro.antiprotv.redalert.AlertListActivity");
+                startActivity(list);
+            }
+        });
     }
 
     @Override
