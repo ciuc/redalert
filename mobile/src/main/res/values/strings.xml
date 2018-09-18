@@ -28,6 +28,7 @@
     <string name= "from">FROM: %1$s</string>
 
     <string name= "add_new_alert">Add New Alert: %1$s</string>
+    <string name= "edit_alert">Edit Alert</string>
     <string name= "interogative_remove_all_alert">Are you sure you want to remove all alerts?</string>
     <string name="delete">Delete this alert</string>
     <string name="edit">Edit this alert</string>

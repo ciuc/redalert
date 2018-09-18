@@ -165,7 +165,7 @@ public class AlertListAdapter extends RecyclerView.Adapter {
                     case 1:
                         //TODO: REFACTOR/REUSE
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ctx);
-                        dialogBuilder.setTitle(v.getResources().getString(R.string.add_new_alert, v.getResources().getString(Alert.getColorString(alert.getLevel())).toUpperCase()));
+                        dialogBuilder.setTitle(v.getResources().getString(R.string.edit_alert));
                         LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
                         final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);

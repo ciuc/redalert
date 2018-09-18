@@ -8,6 +8,7 @@
     <string name="back">Înapoi</string>
     <string name="from">DE LA: %1$s</string>
     <string name="add_new_alert">Adaugă o alertă nouă: %1$s</string>
+    <string name= "edit_alert">Schimbă alerta</string>
     <string name="interogative_remove_all_alert">Ești sigur că vrei să ștergi toate alertele?</string>
     <string name="title_alert_list">Red Alert! - Alertele mele</string>
     <string name="title_about">Red Alert! - Despre</string>
