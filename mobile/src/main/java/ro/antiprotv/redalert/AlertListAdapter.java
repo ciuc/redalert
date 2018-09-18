@@ -1,8 +1,10 @@
 package ro.antiprotv.redalert;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -16,10 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -93,6 +100,7 @@ public class AlertListAdapter extends RecyclerView.Adapter {
         private final TextView itemView;
         private final TextView storeView;
         private final View view;
+
         private Alert alert;
 
         AlertViewHolder(View view, Alert alert) {
@@ -141,7 +149,7 @@ public class AlertListAdapter extends RecyclerView.Adapter {
         }
 
         private class OnClickMenu implements MenuItem.OnMenuItemClickListener {
-            Alert alert;
+            final Alert alert;
             View v;
 
             OnClickMenu(Alert alert, View v) {
@@ -151,11 +159,77 @@ public class AlertListAdapter extends RecyclerView.Adapter {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Context ctx = view.getContext();
+                final Context ctx = view.getContext();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
                 switch (item.getItemId()) {
                     case 1:
-                        Toast.makeText(v.getContext(), "NOT IMPLEMENTED YET. Please remove and create again.", Toast.LENGTH_SHORT).show();
+                        //TODO: REFACTOR/REUSE
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ctx);
+                        dialogBuilder.setTitle(v.getResources().getString(R.string.add_new_alert, v.getResources().getString(Alert.getColorString(alert.getLevel())).toUpperCase()));
+                        LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
+
+                        final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
+                        final AutoCompleteTextView inputStore = layout.findViewById(R.id.add_store);
+                        inputItem.setHint(R.string.what);
+                        inputStore.setHint(R.string.where);
+                        inputItem.setText(alert.getItem());
+                        inputStore.setText(alert.getStore());
+
+                        ArrayAdapter autocompleteItemAdapter = new ItemListAdapter(ctx, android.R.layout.simple_list_item_1, new ArrayList<String>(), viewModel, true);
+                        inputItem.setAdapter(autocompleteItemAdapter);
+                        inputItem.setThreshold(2);
+                        inputItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                String item = parent.getItemAtPosition(position).toString();
+                                inputItem.setText(item);
+                                inputStore.setText(viewModel.selectStoresByItem(item));
+                                inputStore.setSelectAllOnFocus(true);
+                            }
+                        });
+
+                        ArrayAdapter autocompleteStoreAdapter = new ItemListAdapter(ctx, android.R.layout.simple_list_item_1, new ArrayList<String>(), viewModel, false);
+                        inputStore.setAdapter(autocompleteStoreAdapter);
+
+
+                        dialogBuilder.setView(layout);
+                        dialogBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (inputItem.getText().toString().trim().isEmpty()
+                                        && inputStore.getText().toString().trim().isEmpty()) {
+                                    Toast.makeText(ctx, R.string.empty_alert, Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+                                } else {
+                                    alert.setItem(inputItem.getText().toString().trim());
+                                    alert.setStore(inputStore.getText().toString().trim());
+                                    viewModel.update(alert);
+                                    //build the intent to trigger the app on notification click
+                                    Intent listActivity = new Intent(ctx, AlertListActivity.class);
+                                    PendingIntent notifyPendingIntent = PendingIntent.getActivity(
+                                            ctx, 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+                                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
+                                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx, AlertListActivity.RED_ALERT_CHANNEL)
+                                            .setSmallIcon(alert.getIcon())
+                                            .setContentTitle(alert.getItem())
+                                            .setContentText(alert.getStore())
+                                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                                            .setContentIntent(notifyPendingIntent)
+                                            .setColor(v.getResources().getColor(alert.getColor()));
+                                    notificationManager.notify((int) 0, mBuilder.build());
+                                    AlertListAdapter.this.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialogBuilder.show();
                         break;
                     case 2:
                         viewModel.changeLevel(alert, Alert.GREEN_ALERT);

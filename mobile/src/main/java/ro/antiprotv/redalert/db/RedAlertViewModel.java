@@ -41,7 +41,9 @@ public class RedAlertViewModel extends AndroidViewModel {
     public void changeLevel(Alert alert, int level) {
         alertRepository.update(alert, level);
     }
-
+    public void update(Alert alert) {
+        alertRepository.update(alert);
+    }
     public List<String> selectItems(String prefix) {return alertRepository.getItemsByPrefix(prefix); }
     public List<String> selectStores(String prefix) {return alertRepository.getStoresByPrefix(prefix); }
     public String selectStoresByItem(String item) {

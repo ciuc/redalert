@@ -66,6 +66,10 @@ public class AlertRepository {
         }
     }
 
+    public void update(Alert alert) {
+            new updateAsyncTask(alertDao).execute(alert);
+    }
+
     private static class retrieveStoreAsyncTask extends AsyncTask<String, Void, List<String>> {
         private AlertDao mAsyncTaskDao;
 
