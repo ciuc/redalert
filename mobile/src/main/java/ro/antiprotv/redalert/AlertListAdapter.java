@@ -1,8 +1,13 @@
 package ro.antiprotv.redalert;
 
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -146,26 +151,45 @@ public class AlertListAdapter extends RecyclerView.Adapter {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Context ctx = view.getContext();
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
                 switch (item.getItemId()) {
                     case 1:
                         Toast.makeText(v.getContext(), "NOT IMPLEMENTED YET. Please remove and create again.", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
                         viewModel.changeLevel(alert, Alert.GREEN_ALERT);
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(view.getContext());
                         notificationManager.cancel((int) this.alert.getId());
                         break;
                     case 3:
                         viewModel.changeLevel(alert, Alert.ORANGE_ALERT);
+                        updateNotification(notificationManager, ctx, alert, Alert.ORANGE_ALERT);
                         break;
                     case 4:
                         viewModel.changeLevel(alert, Alert.YELLOW_ALERT);
+                        updateNotification(notificationManager, ctx, alert, Alert.YELLOW_ALERT);
                         break;
                     case 5:
                         viewModel.changeLevel(alert, Alert.RED_ALERT);
+                        updateNotification(notificationManager, ctx, alert, Alert.RED_ALERT);
                         break;
                 }
                 return true;
+            }
+
+            private void updateNotification(NotificationManagerCompat notificationManager, Context ctx, Alert alert, int level) {
+                Intent listActivity = new Intent(ctx, AlertListActivity.class);
+                PendingIntent notifyPendingIntent = PendingIntent.getActivity(
+                        ctx, 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(view.getContext(), AlertListActivity.RED_ALERT_CHANNEL)
+                        .setSmallIcon(alert.getIcon())
+                        .setContentTitle(alert.getItem())
+                        .setContentText(alert.getStore())
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                        .setContentIntent(notifyPendingIntent)
+                        .setColor(view.getResources().getColor(Alert.getColor(level)));
+                notificationManager.notify((int) alert.getId(), mBuilder.build());
             }
         }
 

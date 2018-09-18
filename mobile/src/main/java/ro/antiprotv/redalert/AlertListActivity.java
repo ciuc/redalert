@@ -171,7 +171,7 @@ public class AlertListActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
-            dialogBuilder.setTitle(getString(R.string.add_new_alert, getResources().getString(Alert.getColor(level)).toUpperCase()));
+            dialogBuilder.setTitle(getString(R.string.add_new_alert, getResources().getString(Alert.getColorString(level)).toUpperCase()));
             LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
             final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
@@ -210,9 +210,6 @@ public class AlertListActivity extends AppCompatActivity {
                         long alertId = vm.insert(alert);
                         //build the intent to trigger the app on notification click
                         Intent listActivity = new Intent(getApplication().getApplicationContext(), AlertListActivity.class);
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-                        /*PendingIntent resultPendingIntent =
-                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);*/
                         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
                                 getApplicationContext(), 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());

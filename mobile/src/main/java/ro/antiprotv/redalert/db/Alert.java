@@ -33,7 +33,7 @@ public class Alert {
         this.store = store;
     }
 
-    public static int getColor(int level) {
+    public static int getColorString(int level) {
         if (level == RED_ALERT) {
             return R.string.red;
         }
@@ -42,6 +42,19 @@ public class Alert {
         }
         if (level == ORANGE_ALERT) {
             return R.string.orange;
+        }
+        return R.string.red;
+    }
+
+    public static int getColor(int level) {
+        if (level == RED_ALERT) {
+            return R.color.red;
+        }
+        if (level == YELLOW_ALERT) {
+            return R.color.yellow;
+        }
+        if (level == ORANGE_ALERT) {
+            return R.color.orange;
         }
         return R.string.red;
     }
