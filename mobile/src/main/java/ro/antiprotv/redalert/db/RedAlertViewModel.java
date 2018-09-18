@@ -25,17 +25,9 @@ public class RedAlertViewModel extends AndroidViewModel {
         return allAlerts;
     }
 
-    public void insert(Alert alert) {
+    public long insert(Alert alert) {
         long id = alertRepository.insert(alert);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
-                .setSmallIcon(alert.getIcon())
-                .setContentTitle(alert.getItem())
-                .setContentText(alert.getStore())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setColor(getApplication().getResources().getColor(alert.getColor()));
-        notificationManager.notify((int) id, mBuilder.build());
+        return id;
     }
 
     public void removeAllAlerts() {

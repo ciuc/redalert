@@ -3,6 +3,8 @@ package ro.antiprotv.redalert;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -204,7 +207,24 @@ public class AlertListActivity extends AppCompatActivity {
                         dialog.cancel();
                     } else {
                         Alert alert = new Alert(level, inputItem.getText().toString().trim(), inputStore.getText().toString().trim());
-                        vm.insert(alert);
+                        long alertId = vm.insert(alert);
+                        //build the intent to trigger the app on notification click
+                        Intent listActivity = new Intent(getApplication().getApplicationContext(), AlertListActivity.class);
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                        /*PendingIntent resultPendingIntent =
+                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);*/
+                        PendingIntent notifyPendingIntent = PendingIntent.getActivity(
+                                getApplicationContext(), 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
+                                .setSmallIcon(alert.getIcon())
+                                .setContentTitle(alert.getItem())
+                                .setContentText(alert.getStore())
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                                .setContentIntent(notifyPendingIntent)
+                                .setColor(getApplication().getResources().getColor(alert.getColor()));
+                        notificationManager.notify((int) alertId, mBuilder.build());
                         adapter.notifyDataSetChanged();
                     }
                 }
