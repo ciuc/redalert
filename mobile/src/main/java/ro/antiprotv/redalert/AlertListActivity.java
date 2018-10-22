@@ -8,6 +8,8 @@ import android.app.TaskStackBuilder;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -62,7 +64,7 @@ public class AlertListActivity extends AppCompatActivity {
         LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
 
         toggleAlertListVisibility(alerts.getValue(), recyclerView, noAlertsView);
-
+        
         adapter.setAlerts(alerts.getValue());
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
             @Override
@@ -212,7 +214,11 @@ public class AlertListActivity extends AppCompatActivity {
                         Intent listActivity = new Intent(getApplication().getApplicationContext(), AlertListActivity.class);
                         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
                                 getApplicationContext(), 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+                        Intent intent = new Intent(getApplicationContext(), MyBroadcastReceiver.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+                        notificationManager = NotificationManagerCompat.from(getApplicationContext());
                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
                                 .setSmallIcon(alert.getIcon())
                                 .setContentTitle(alert.getItem())
@@ -220,6 +226,8 @@ public class AlertListActivity extends AppCompatActivity {
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                                 .setContentIntent(notifyPendingIntent)
+                                .setDeleteIntent(pendingIntent)
+                                .setOngoing(true)
                                 .setColor(getApplication().getResources().getColor(alert.getColor()));
                         notificationManager.notify((int) alertId, mBuilder.build());
                         adapter.notifyDataSetChanged();
@@ -236,6 +244,15 @@ public class AlertListActivity extends AppCompatActivity {
 
             dialogBuilder.show();
         }
+    }
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        MyBroadcastReceiver() {}
+        @Override
+        public void onReceive(Context context, Intent intent) {
+             Toast.makeText(context,"aaaaaaaaaaa", Toast.LENGTH_SHORT);
+        }
+
     }
 
     private class RemoveAllAlertsClickListener implements View.OnClickListener{
