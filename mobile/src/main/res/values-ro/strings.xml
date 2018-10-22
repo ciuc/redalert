@@ -30,34 +30,33 @@
     <string name="make_yellow">Fă alerta GALBENĂ</string>
 
     <string name="about.text"><![CDATA[
-    <h1>Red Alert - shopping priority list<h1>
-<p>This simple app allows you to set alerts for things you need to buy so you don\'t forget.
-The alerts will show up as notifications in your phones\' bar and on the lock screen and will stay there until you
-remove the notification or the alert itself.</p>
-<p>I hope you find this useful, I certainly do :)</p>
+    <h1>Red Alert - lista de cumpărături cu priorități<h1>
+<p>Această simplă aplicație îți permite să setezi alerte pentru lucrurile pe care trebuie să le cumperi pentru ca să nu uiți de ele.
+Alertele roșii vor apărea ca notificări în bara de stare a telefonului și pe lock screen și vor rămâne acolo până când ștergi alerta.</p>
+<p>În versiunile ulterioare vor fi câteva setări care îți vor permite să ai notificări și pentru celelalte alerte și să ștergi notificarea.</p>
 ]]>
     </string>
     <string name="help.text"><![CDATA[
-<p><b>Alert levels (colors)</b></p>
-<p>Each alert has a level (color). The colors are used to order them - red - orange - yellow.
-For instance use a red alert for something you urgently need (you\'ve just ran out of toothpaste),
-an orange one for something you\'ll need in the near future (you\'ve just opened the last box of cereals)
-and a yellow alert for that spare light bulb you know you\'ll need someday.</p>
-<p><b>Adding an alert</b></p>
-Simply click on one of the buttons which coresponds to the desired color and fill in the name of the item that you need
-and the name of the store that you find that item.<br>
-The app will autocomplete the item name based on the previous alerts you had.
-<p><b>Removing/editing an alert</b></p>
-<p>Long click on one alert and it will open a context menu. Choose the desired action:
+<p><b>Culorile alertelor</b></p>
+<p>Fiecare alertă are un nivel (culoare). Culorile sunt folosite pentru a ordona alertele: roșu - portocaliu - galben.
+De exemplu, folosește alerta roșie pentru ceva de care ai nevoie urgent (tocmai ai rămas fără pastă de dinți),
+alerta portocalie pentru ceva de care vei avea nevoie în viitorul apropiat (tocmai ai deschis ultima cutie de cereale)
+și alerta galbenă pentru becul de rezervă care știi că îți va trebui cândva.</p>
+<p><b>Cum adaugi o alertă</b></p>
+<p>Doar trebuie să apeși pe butonul corespunzător culorii alertei pe care vrei să o adaugi și să scrii în dialogul care se va deschide
+numele lucrului de care ai nevoie și numele magazinului.<br>
+Aplicația va autocompleta numele articolului și magazinului bazându-se pe alertele pe care le-ai avut până acum.<br></p>
+<p><b>Ștergerea/editarea alertelor</b></p>
+<p>Apasă lung pe una din alerte și se va deschide un meniu:
 <br>
-- Delete - removes the alert and the notification<br>
-- Make red/orange/yellow - change the alert level<br>
+- Șterge - șterge alertea<br>
+- Fă alerta roșie/portocalie/galbenă - va schimba culoarea alertei<br>
 </p>
-<p><b>Removing all alerts</b></p>
-<p>Click on the button on lower right corner and choose OK when the dialog shows up.</p>
-<p><b>Autocomplete</b></p>
-<p>The app keeps a list of the previous alerts and it will autocomplete the item as you type. Once you decide to choose an item from the
-suggestions, it will autocomplete the store name based on some criteria. You can always ovewrite the store name with something else.</p>
+<p><b>Ștergerea tutorur alertelor</b></p>
+<p>Apasă pe butonul din colțul din dreapta jos și alege OK în dialogul care se va deschide.</p>
+<p><b>Funcția de autocompletare</b></p>
+<p>Aplicația ține o listă a alertelor pe care le-ai avut până acum și îți va oferi sugestii referitoare la numele articolului.
+Odată ce ai ales numele articolului, aplicația va autocompleta numele magazinului. Bineînțeles că vei putea suprascrie numele sugerate cu orice altceva.</p>
 ]]>
     </string>
 </resources>
