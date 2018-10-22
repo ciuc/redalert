@@ -212,7 +212,7 @@ public class AlertListActivity extends AppCompatActivity {
                         Intent listActivity = new Intent(getApplication().getApplicationContext(), AlertListActivity.class);
                         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
                                 getApplicationContext(), 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                        notificationManager = NotificationManagerCompat.from(getApplicationContext());
                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
                                 .setSmallIcon(alert.getIcon())
                                 .setContentTitle(alert.getItem())
