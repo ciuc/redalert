@@ -54,7 +54,8 @@ public class AlertListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alert_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        notificationManager = NotificationManager.getInstance();
+        notificationManager.init(getApplicationContext());
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter = new AlertListAdapter(this, redAlertViewModel);
         final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
@@ -71,6 +72,7 @@ public class AlertListActivity extends AppCompatActivity {
                 adapter.setAlerts(alerts);
                 adapter.notifyDataSetChanged();
                 toggleAlertListVisibility(alerts, recyclerView, noAlertsView);
+                notificationManager.reissueAllAlerts(alerts);
             }
         });
 
@@ -85,9 +87,6 @@ public class AlertListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        notificationManager = NotificationManager.getInstance();
-        notificationManager.init(getApplicationContext());
     }
 
 
@@ -178,7 +177,6 @@ public class AlertListActivity extends AppCompatActivity {
 
             ArrayAdapter autocompleteStoreAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, false);
             inputStore.setAdapter(autocompleteStoreAdapter);
-
 
             dialogBuilder.setView(layout);
             dialogBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {

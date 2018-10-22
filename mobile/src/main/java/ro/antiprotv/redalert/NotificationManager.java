@@ -8,6 +8,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.util.List;
+
 import ro.antiprotv.redalert.db.Alert;
 
 /**
@@ -68,7 +70,15 @@ public class NotificationManager {
         }
     }
 
-
+    /**
+     * Reissue alerts when app starts; they might have been removed by the android system when closing app
+     */
+    public void reissueAllAlerts(List<Alert> alerts) {
+        for (Alert alert:
+             alerts) {
+            notifyAlert(alert);
+        }
+    }
     /**
      * This method creates, removes or updates a notification
      *
