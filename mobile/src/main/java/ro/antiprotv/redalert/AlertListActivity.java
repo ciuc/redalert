@@ -2,7 +2,6 @@ package ro.antiprotv.redalert;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.arch.lifecycle.LiveData;
@@ -41,9 +40,9 @@ import ro.antiprotv.redalert.db.RedAlertViewModel;
  * The main activity (entry point) of the Red Alert! app
  */
 public class AlertListActivity extends AppCompatActivity {
-    public static final String RED_ALERT_CHANNEL = "RED_ALERT_CHANNEL";
+
     AlertListAdapter adapter;
-    NotificationManagerCompat notificationManager;
+    NotificationManager notificationManager;
     private RedAlertViewModel redAlertViewModel;
 
     @Override
@@ -53,7 +52,6 @@ public class AlertListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        notificationManager = NotificationManagerCompat.from(this);
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter = new AlertListAdapter(this, redAlertViewModel);
         final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
@@ -85,29 +83,12 @@ public class AlertListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        createNotificationChannel();
+        notificationManager = NotificationManager.getInstance();
+        notificationManager.init(getApplicationContext());
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_LOW;
-            NotificationChannel channel = new NotificationChannel(RED_ALERT_CHANNEL, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
-    private void removeAllNotifications() {
-        notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.cancelAll();
-    }
+
 
     /**
      * this displays the "empty" view if there are no alerts, and hides it if there are alerts.
@@ -208,20 +189,8 @@ public class AlertListActivity extends AppCompatActivity {
                     } else {
                         Alert alert = new Alert(level, inputItem.getText().toString().trim(), inputStore.getText().toString().trim());
                         long alertId = vm.insert(alert);
-                        //build the intent to trigger the app on notification click
-                        Intent listActivity = new Intent(getApplication().getApplicationContext(), AlertListActivity.class);
-                        PendingIntent notifyPendingIntent = PendingIntent.getActivity(
-                                getApplicationContext(), 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
-                        notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplication().getApplicationContext(), AlertListActivity.RED_ALERT_CHANNEL)
-                                .setSmallIcon(alert.getIcon())
-                                .setContentTitle(alert.getItem())
-                                .setContentText(alert.getStore())
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                                .setContentIntent(notifyPendingIntent)
-                                .setColor(getApplication().getResources().getColor(alert.getColor()));
-                        notificationManager.notify((int) alertId, mBuilder.build());
+                        alert.setId(alertId);
+                        notificationManager.notifyAlert(alert);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -256,7 +225,7 @@ public class AlertListActivity extends AppCompatActivity {
                     redAlertViewModel.removeAllAlerts();
                     adapter.setAlerts(null);
                     adapter.notifyDataSetChanged();
-                    removeAllNotifications();
+                    notificationManager.removeAllNotifications();
                 }
             });
             dialogBuilder.show();

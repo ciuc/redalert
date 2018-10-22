@@ -1,8 +1,10 @@
 package ro.antiprotv.redalert;
 
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -13,16 +15,16 @@ import ro.antiprotv.redalert.db.Alert;
  */
 public class NotificationManager {
 
+    public static final String RED_ALERT_CHANNEL = "RED_ALERT_CHANNEL";
     private static NotificationManager INSTANCE = null;
     private NotificationManagerCompat notificationManagerCompat;
     private PendingIntent notifyPendingIntent;
     private Context context;
+
     private NotificationManager() {
     }
 
-    ;
-
-    private static NotificationManager getInstance(Context ctx) {
+    public static NotificationManager getInstance() {
         if (INSTANCE == null) {
             synchronized (NotificationManager.class) {
                 if (INSTANCE == null) {
@@ -36,6 +38,7 @@ public class NotificationManager {
 
     /**
      * Initializes the singleton
+     *
      * @param ctx
      */
     public void init(Context ctx) {
@@ -50,16 +53,30 @@ public class NotificationManager {
         if (context == null) {
             context = ctx;
         }
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = ctx.getResources().getString(R.string.channel_name);
+            String description = ctx.getResources().getString(R.string.channel_description);
+            int importance = android.app.NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel(RED_ALERT_CHANNEL, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            android.app.NotificationManager notificationManager = context.getSystemService(android.app.NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 
     /**
      * This method creates, removes or updates a notification
+     *
      * @param alert
      */
     public void notifyAlert(Alert alert) {
         if (alert.getLevel() == Alert.RED_ALERT) {
-           NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, AlertListActivity.RED_ALERT_CHANNEL)
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, RED_ALERT_CHANNEL)
                     .setSmallIcon(alert.getIcon())
                     .setContentTitle(alert.getItem())
                     .setContentText(alert.getStore())
@@ -69,11 +86,12 @@ public class NotificationManager {
                     .setOngoing(true)
                     .setColor(context.getResources().getColor(alert.getColor()));
             notificationManagerCompat.notify((int) alert.getId(), mBuilder.build());
-        }
-        else {
-            notificationManagerCompat.cancel((int)alert.getId());
+        } else {
+            notificationManagerCompat.cancel((int) alert.getId());
         }
     }
 
-
+    public void removeAllNotifications() {
+        notificationManagerCompat.cancelAll();
+    }
 }
