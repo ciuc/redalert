@@ -28,10 +28,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_help"
             android:screenOrientation="portrait"></activity>
-        <receiver
-            android:name="ro.antiprotv.redalert.AlertListActivity$MyBroadcastReceiver"
-            android:exported="false" >
-        </receiver>
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -203,19 +204,8 @@ public class AlertListActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
-            //alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
             dialogBuilder.show();
         }
-    }
-
-    public class MyBroadcastReceiver extends BroadcastReceiver {
-        MyBroadcastReceiver() {}
-        @Override
-        public void onReceive(Context context, Intent intent) {
-             Toast.makeText(context,"aaaaaaaaaaa", Toast.LENGTH_SHORT);
-        }
-
     }
 
     private class RemoveAllAlertsClickListener implements View.OnClickListener{
