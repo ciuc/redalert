@@ -182,14 +182,13 @@ public class AlertListActivity extends AppCompatActivity {
             dialogBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
                     if (inputItem.getText().toString().trim().isEmpty()
                             && inputStore.getText().toString().trim().isEmpty()) {
                         Toast.makeText(AlertListActivity.this, R.string.empty_alert, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     } else {
                         Alert alert = new Alert(level, inputItem.getText().toString().trim(), inputStore.getText().toString().trim());
-                        long alertId = vm.insert(alert);
+                        long alertId = redAlertViewModel.insert(alert);
                         alert.setId(alertId);
                         notificationManager.notifyAlert(alert);
                         adapter.notifyDataSetChanged();
