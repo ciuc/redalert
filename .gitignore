@@ -32,4 +32,4 @@ hs_err_pid*
 /build
 /captures
 .externalNativeBuild
-
+.idea
