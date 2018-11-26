@@ -1,5 +1,6 @@
 package ro.antiprotv.redalert;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.PendingIntent;
@@ -13,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
@@ -21,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +50,7 @@ public class AlertListActivity extends AppCompatActivity {
     AlertListAdapter adapter;
     NotificationManager notificationManager;
     private RedAlertViewModel redAlertViewModel;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +62,10 @@ public class AlertListActivity extends AppCompatActivity {
         notificationManager.init(getApplicationContext());
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
         adapter = new AlertListAdapter(this, redAlertViewModel);
-        final RecyclerView recyclerView = findViewById(R.id.alert_list_view);
+        recyclerView = findViewById(R.id.alert_list_view);
         final TextView noAlertsView = findViewById(R.id.empty_view);
 
-        LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
+        final LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
 
         toggleAlertListVisibility(alerts.getValue(), recyclerView, noAlertsView);
         
@@ -87,6 +91,26 @@ public class AlertListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                if (swipeDir == ItemTouchHelper.LEFT) {
+                    Alert alert = alerts.getValue().get(viewHolder.getAdapterPosition());
+                    redAlertViewModel.changeLevel(alert, Alert.GREEN_ALERT);
+                    adapter.notifyDataSetChanged();
+                    notificationManager.notifyAlert(alert);
+                }
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 
@@ -229,6 +253,7 @@ public class AlertListActivity extends AppCompatActivity {
             });
             dialogBuilder.show();
         }
-
     }
+
+
 }
