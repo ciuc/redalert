@@ -66,7 +66,7 @@ The app will autocomplete the item name based on the previous alerts you had.
 <p>Click on the button on lower right corner and choose OK when the dialog shows up.</p>
 <p><b>Autocomplete</b></p>
 <p>The app keeps a list of the previous alerts and it will autocomplete the item as you type. Once you decide to choose an item from the
-suggestions, it will autocomplete the store name based on some criteria. You can always ovewrite the store name with something else.</p>
+suggestions, it will autocomplete the store name based on some criteria. You can always overwrite the store name with something else.</p>
 ]]>
     </string>
 </resources>

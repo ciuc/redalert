@@ -236,11 +236,6 @@ public class AlertListAdapter extends RecyclerView.Adapter {
                 notificationManager.notifyAlert(alert);
                 return true;
             }
-
-        }
-
-        ;
-
-
+        };
     }
 }
