@@ -33,8 +33,12 @@ hs_err_pid*
 /captures
 .externalNativeBuild
 
+
 -feature-graphic.png
 .idea/vcs.xml
 .idea/caches/
 .idea/codeStyles/
 .idea/misc.xml
+
+.idea
+

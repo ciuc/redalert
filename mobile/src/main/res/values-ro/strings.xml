@@ -47,12 +47,13 @@ alerta portocalie pentru ceva de care vei avea nevoie în viitorul apropiat (toc
 numele lucrului de care ai nevoie și numele magazinului.<br>
 Aplicația va autocompleta numele articolului și magazinului bazându-se pe alertele pe care le-ai avut până acum.<br></p>
 <p><b>Ștergerea/editarea alertelor</b></p>
+<p>Swipe stânga pe o alertă pentru a o șterge.<p>
 <p>Apasă lung pe una din alerte și se va deschide un meniu:
 <br>
-- Șterge - șterge alertea<br>
+- Șterge - șterge alerta<br>
 - Fă alerta roșie/portocalie/galbenă - va schimba culoarea alertei<br>
 </p>
-<p><b>Ștergerea tutorur alertelor</b></p>
+<p><b>Ștergerea tuturor alertelor</b></p>
 <p>Apasă pe butonul din colțul din dreapta jos și alege OK în dialogul care se va deschide.</p>
 <p><b>Funcția de autocompletare</b></p>
 <p>Aplicația ține o listă a alertelor pe care le-ai avut până acum și îți va oferi sugestii referitoare la numele articolului.
