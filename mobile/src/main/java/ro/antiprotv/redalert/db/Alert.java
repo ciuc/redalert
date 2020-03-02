@@ -34,28 +34,42 @@ public class Alert {
     }
 
     public static int getColorString(int level) {
-        if (level == RED_ALERT) {
-            return R.string.red;
+        int color = R.string.red;
+        switch (level) {
+            case RED_ALERT:
+                color = R.string.red;
+                break;
+            case ORANGE_ALERT:
+                color = R.string.orange;
+                break;
+            case YELLOW_ALERT:
+                color = R.string.yellow;
+                break;
+            case GREEN_ALERT:
+                color = R.string.green;
+                break;
         }
-        if (level == YELLOW_ALERT) {
-            return R.string.yellow;
-        }
-        if (level == ORANGE_ALERT) {
-            return R.string.orange;
-        }
-        return R.string.red;
+
+        return color;
     }
 
     public static int getColor(int level) {
-        if (level == RED_ALERT) {
-            return R.color.red;
+        int color = R.string.red;
+        switch (level) {
+            case RED_ALERT:
+                color = R.color.red;
+                break;
+            case ORANGE_ALERT:
+                color = R.color.orange;
+                break;
+            case YELLOW_ALERT:
+                color = R.color.yellow;
+                break;
+            case GREEN_ALERT:
+                color = R.color.green;
+                break;
         }
-        if (level == YELLOW_ALERT) {
-            return R.color.yellow;
-        }
-        if (level == ORANGE_ALERT) {
-            return R.color.orange;
-        }
+
         return R.string.red;
     }
 
@@ -106,6 +120,19 @@ public class Alert {
         return R.color.yellow;
     }
 
+    public void demote(){
+        switch (getLevel()) {
+            case RED_ALERT:
+                setLevel(ORANGE_ALERT);
+                break;
+            case ORANGE_ALERT:
+                setLevel(YELLOW_ALERT);
+                break;
+            case YELLOW_ALERT:
+                setLevel(GREEN_ALERT);
+                break;
+        }
+    }
     public int getIcon() {
         /*if (level == RED_ALERT) {
             return R.drawable.ic_warning_red_24dp;

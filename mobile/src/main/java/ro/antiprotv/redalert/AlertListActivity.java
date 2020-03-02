@@ -92,7 +92,7 @@ public class AlertListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
@@ -104,6 +104,12 @@ public class AlertListActivity extends AppCompatActivity {
                 if (swipeDir == ItemTouchHelper.LEFT) {
                     Alert alert = alerts.getValue().get(viewHolder.getAdapterPosition());
                     redAlertViewModel.changeLevel(alert, Alert.GREEN_ALERT);
+                    adapter.notifyDataSetChanged();
+                    notificationManager.notifyAlert(alert);
+                } else if (swipeDir == ItemTouchHelper.RIGHT) {
+                    Alert alert = alerts.getValue().get(viewHolder.getAdapterPosition());
+                    alert.demote();
+                    redAlertViewModel.update(alert);
                     adapter.notifyDataSetChanged();
                     notificationManager.notifyAlert(alert);
                 }

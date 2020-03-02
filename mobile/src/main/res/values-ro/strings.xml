@@ -60,4 +60,5 @@ Aplicația va autocompleta numele articolului și magazinului bazându-se pe ale
 Odată ce ai ales numele articolului, aplicația va autocompleta numele magazinului. Bineînțeles că vei putea suprascrie numele sugerate cu orice altceva.</p>
 ]]>
     </string>
+    <string name="green">verde</string>
 </resources>
