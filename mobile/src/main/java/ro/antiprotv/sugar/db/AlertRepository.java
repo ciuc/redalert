@@ -1,8 +1,9 @@
-package ro.antiprotv.redalert.db;
+package ro.antiprotv.sugar.db;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -25,8 +26,13 @@ public class AlertRepository {
         return allAlerts;
     }
 
-    List<String> getItemsByPrefix(String prefix) {
-        return alertDao.getItemsByPrefix(prefix);
+    Alert findAlertByItem(String item) {
+        FindAlertsByItemAsyncTask task = new FindAlertsByItemAsyncTask(alertDao);
+        try {
+            return task.execute(item).get();
+        } catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
     }
 
     List<String> getStoresByPrefix(String prefix) {
@@ -52,22 +58,26 @@ public class AlertRepository {
     }
 
     public void removeAll() {
-        new deleteAsyncTask(alertDao).execute();
+        new updateAsyncTask(alertDao).execute();
     }
 
-    public void delete(Alert... alerts) {
-        new deleteAsyncTask(alertDao).execute(alerts);
+    public Alert deleteAlertByItem(String itemName) {
+        Alert alert = findAlertByItem(itemName);
+        if (alert != null) {
+            update(alert, Alert.GREEN_ALERT);
+        }
+        return alert;
     }
 
     public void update(Alert alert, int level) {
-        if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.YELLOW_ALERT || level == Alert.GREEN_ALERT) {
+        if (level == Alert.RED_ALERT || level == Alert.ORANGE_ALERT || level == Alert.GREEN_ALERT) {
             alert.setLevel(level);
             new updateAsyncTask(alertDao).execute(alert);
         }
     }
 
     public void update(Alert alert) {
-            new updateAsyncTask(alertDao).execute(alert);
+        new updateAsyncTask(alertDao).execute(alert);
     }
 
     private static class retrieveStoreAsyncTask extends AsyncTask<String, Void, List<String>> {
@@ -81,6 +91,26 @@ public class AlertRepository {
         protected List<String> doInBackground(final String... items) {
             return mAsyncTaskDao.selectStoresByItem(items[0]);
 
+        }
+    }
+
+    private static class FindAlertsByItemAsyncTask extends AsyncTask<String, Void, Alert> {
+        private AlertDao mAsyncTaskDao;
+
+        FindAlertsByItemAsyncTask(AlertDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Alert doInBackground(final String... items) {
+            Alert alert;
+            List<Alert> alerts = mAsyncTaskDao.getAlertsByItem(items[0]);
+            if (alerts.size() >= 1) {
+                alert = alerts.get(0);
+            } else {
+                alert = null;
+            }
+            return alert;
         }
     }
 
@@ -101,7 +131,7 @@ public class AlertRepository {
             Alert newAlert = params[0];
             List<Alert> alerts = mAsyncTaskDao.getAllDisabledAlertsSync();
             for (Alert alert : alerts) {
-                if (newAlert.getItem().equals(alert.getItem())
+                if (newAlert.getItemName().equals(alert.getItemName())
                         && newAlert.getStore().equals(alert.getStore())) {
                     alert.setLevel(newAlert.getLevel());
                     mAsyncTaskDao.updateAlerts(alert);
@@ -126,23 +156,5 @@ public class AlertRepository {
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Alert, Void, Void> {
-        private AlertDao mAsyncTaskDao;
 
-        deleteAsyncTask(AlertDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Alert... params) {
-            if (params.length == 0) {
-                mAsyncTaskDao.removeAll();
-            } else {
-                for (Alert alert : params) {
-                    mAsyncTaskDao.removeAlert(alert);
-                }
-            }
-            return null;
-        }
-    }
 }

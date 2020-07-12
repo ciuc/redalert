@@ -1,20 +1,15 @@
-package ro.antiprotv.redalert.db;
+package ro.antiprotv.sugar.db;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import ro.antiprotv.redalert.R;
+import ro.antiprotv.sugar.R;
 
 @Entity(tableName = "alert")
 public class Alert {
     public static final int RED_ALERT = 1;
     public static final int ORANGE_ALERT = 2;
-    public static final int YELLOW_ALERT = 3;
     //as if it was disabled
     //we do not delete alerts so we can use them for autocompletion
     public static final int GREEN_ALERT = 0;
@@ -24,12 +19,12 @@ public class Alert {
     @NonNull
     private int level;
     @NonNull
-    private String item;
+    private String itemName;
     private String store;
 
-    public Alert(@NonNull int level, @NonNull String item, String store) {
+    public Alert(@NonNull int level, @NonNull String itemName, String store) {
         this.level = level;
-        this.item = item;
+        this.itemName = itemName;
         this.store = store;
     }
 
@@ -41,9 +36,6 @@ public class Alert {
                 break;
             case ORANGE_ALERT:
                 color = R.string.orange;
-                break;
-            case YELLOW_ALERT:
-                color = R.string.yellow;
                 break;
             case GREEN_ALERT:
                 color = R.string.green;
@@ -61,9 +53,6 @@ public class Alert {
                 break;
             case ORANGE_ALERT:
                 color = R.color.orange;
-                break;
-            case YELLOW_ALERT:
-                color = R.color.yellow;
                 break;
             case GREEN_ALERT:
                 color = R.color.green;
@@ -90,12 +79,12 @@ public class Alert {
     }
 
     @NonNull
-    public String getItem() {
-        return item;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItem(@NonNull String item) {
-        this.item = item;
+    public void setItemName(@NonNull String itemId) {
+        this.itemName = itemId;
     }
 
     @NonNull
@@ -111,28 +100,23 @@ public class Alert {
         if (level == RED_ALERT) {
             return R.color.red;
         }
-        if (level == YELLOW_ALERT) {
-            return R.color.yellow;
-        }
         if (level == ORANGE_ALERT) {
             return R.color.orange;
         }
         return R.color.yellow;
     }
 
-    public void demote(){
+    public void demote() {
         switch (getLevel()) {
             case RED_ALERT:
                 setLevel(ORANGE_ALERT);
                 break;
             case ORANGE_ALERT:
-                setLevel(YELLOW_ALERT);
-                break;
-            case YELLOW_ALERT:
                 setLevel(GREEN_ALERT);
                 break;
         }
     }
+
     public int getIcon() {
         /*if (level == RED_ALERT) {
             return R.drawable.ic_warning_red_24dp;
@@ -143,6 +127,6 @@ public class Alert {
         if (level == ORANGE_ALERT) {
             return R.drawable.ic_warning_red_24dp;
         }*/
-        return R.drawable.ic_priority_high_black_24dp;
+        return R.drawable.ic_error_outline_black_24dp;
     }
 }

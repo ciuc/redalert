@@ -4,80 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AlertListActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <!--include layout="@layout/content_alert_list" /-->
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/red"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/title_alert_list"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/alert_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview.alert_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:visibility="gone"
-         />
+        android:visibility="gone" />
+
     <TextView
-        android:id="@+id/empty_view"
+        android:id="@+id/recyclerview.alert_list.empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
-        android:text="@string/no_alerts" />
+        android:text="@string/no_alerts"
+        android:visibility="gone" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_orange"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button.alert_list.add_orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/add_red"
+        android:layout_centerHorizontal="true"
         app:backgroundTint="@color/orange"
-        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_add_black_12dp"
         app:useCompatPadding="true" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_yellow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@color/yellow"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/add_orange"
-        app:useCompatPadding="true" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/remove_all"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button.alert_list.remove_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@id/button.alert_list.add_orange"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_delete_forever_white_24dp"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_delete_forever_white_12dp"
         app:useCompatPadding="true" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_red"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button.alert_list.add_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/red"
-        app:srcCompat="@drawable/ic_add_black_24dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@id/button.alert_list.add_orange"
+        app:backgroundTint="@color/red"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_add_black_12dp"
         app:useCompatPadding="true" />
 
 </RelativeLayout>

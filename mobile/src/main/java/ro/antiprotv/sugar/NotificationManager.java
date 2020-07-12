@@ -1,16 +1,17 @@
-package ro.antiprotv.redalert;
+package ro.antiprotv.sugar;
 
 import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.List;
 
-import ro.antiprotv.redalert.db.Alert;
+import ro.antiprotv.sugar.db.Alert;
 
 /**
  * Manager class for notifications throughout the app
@@ -48,7 +49,7 @@ public class NotificationManager {
             notificationManagerCompat = NotificationManagerCompat.from(ctx);
         }
         if (notifyPendingIntent == null) {
-            Intent listActivity = new Intent(ctx, AlertListActivity.class);
+            Intent listActivity = new Intent(ctx, MainActivity.class);
             notifyPendingIntent = PendingIntent.getActivity(
                     ctx, 0, listActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         }
@@ -74,11 +75,12 @@ public class NotificationManager {
      * Reissue alerts when app starts; they might have been removed by the android system when closing app
      */
     public void reissueAllAlerts(List<Alert> alerts) {
-        for (Alert alert:
-             alerts) {
+        for (Alert alert :
+                alerts) {
             notifyAlert(alert);
         }
     }
+
     /**
      * This method creates, removes or updates a notification
      *
@@ -88,7 +90,7 @@ public class NotificationManager {
         if (alert.getLevel() == Alert.RED_ALERT) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, RED_ALERT_CHANNEL)
                     .setSmallIcon(alert.getIcon())
-                    .setContentTitle(alert.getItem())
+                    .setContentTitle(alert.getItemName())
                     .setContentText(alert.getStore())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -101,6 +103,9 @@ public class NotificationManager {
         }
     }
 
+    public void cancelNotification(Alert alert) {
+        notificationManagerCompat.cancel((int) alert.getId());
+    }
     public void removeAllNotifications() {
         notificationManagerCompat.cancelAll();
     }

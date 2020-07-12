@@ -2,16 +2,17 @@
  * Copyright Cristian "ciuc" Starasciuc 2016
  * cristi.ciuc@gmail.com
  */
-package ro.antiprotv.redalert;
+package ro.antiprotv.sugar;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by ciuc on 7/19/16.
@@ -29,7 +30,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent list = new Intent();
-                list.setClassName(HelpActivity.this, "ro.antiprotv.redalert.AlertListActivity");
+                list.setClassName(HelpActivity.this, "ro.antiprotv.sugar.AlertListActivity");
                 startActivity(list);
             }
         });

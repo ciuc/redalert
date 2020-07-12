@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
-    android:padding="5dp"
+    android:layout_margin="@dimen/list_item_layout_margin"
     android:background="@drawable/alert_rounded_background"
+    android:padding="@dimen/list_item_padding"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ImageView
-        android:id="@+id/alert_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="11dp"
-        android:src="@drawable/ic_warning_red_24dp"
-        />
-    <TextView
-        android:id="@+id/item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/alert_icon"
-        android:textSize="32dp"
-        android:text="Toothbrush"
-        android:textColor="#FF0000" />
-    <TextView
-        android:id="@+id/store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/item"
-        android:layout_toRightOf="@+id/alert_icon"
-        android:text="FROM: DM in MegaMall"/>
+        android:id="@+id/image.alert_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/ic_warning_red_24dp" />
 
+    <TextView
+        android:id="@+id/adapter.alerts.text.item"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_toRightOf="@+id/image.alert_icon"
+        android:fontFamily="@font/coda"
+        android:text="Toothbrush"
+        android:textColor="#FF0000"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/adapter.alerts.text.store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adapter.alerts.text.item"
+        android:layout_toRightOf="@+id/image.alert_icon"
+        android:text="FROM: DM in MegaMall" />
+
+    <ImageButton
+        android:id="@+id/adapter.alerts.button.filterByStore"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/adapter.alerts.text.item"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/adapter.alerts.text.store"
+        android:src="@drawable/ic_filter_list_black_24dp"
+        android:tint="#000000" />
+
+    <ImageButton
+        android:id="@+id/adapter.alerts.button.edit_alert"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/adapter.alerts.text.item"
+        android:layout_marginRight="0dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_edit_black_24dp" />
 </RelativeLayout>

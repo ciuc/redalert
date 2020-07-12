@@ -1,15 +1,16 @@
-package ro.antiprotv.redalert.db;
+package ro.antiprotv.sugar.db;
 
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.DatabaseConfiguration;
-import android.arch.persistence.room.InvalidationTracker;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-@Database(entities = {Alert.class}, version = 1)
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+
+@Database(entities = {Alert.class, Item.class}, version = 1)
 public abstract class RedalertRoomDatabase extends RoomDatabase {
 
     private static RedalertRoomDatabase INSTANCE;
@@ -28,6 +29,8 @@ public abstract class RedalertRoomDatabase extends RoomDatabase {
     }
 
     public abstract AlertDao alertDao();
+
+    public abstract ItemDao itemDao();
 
     @NonNull
     @Override

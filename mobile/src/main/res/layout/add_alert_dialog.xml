@@ -4,25 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/add_item_textinput_wrapper"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog.alert.textinput.add_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <AutoCompleteTextView
-            android:id="@+id/add_item"
+            android:id="@+id/dialog.alert.autocomplete.add_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/add_store_textinput_wrapper"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog.alert.textinput.add_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <AutoCompleteTextView
-            android:id="@+id/add_store"
+            android:id="@+id/dialog.alert.autocomplete.add_store"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

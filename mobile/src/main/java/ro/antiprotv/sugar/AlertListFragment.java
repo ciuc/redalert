@@ -1,34 +1,11 @@
-package ro.antiprotv.redalert;
+package ro.antiprotv.sugar;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -36,39 +13,82 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.antiprotv.redalert.db.Alert;
-import ro.antiprotv.redalert.db.RedAlertViewModel;
+import ro.antiprotv.sugar.db.Alert;
+import ro.antiprotv.sugar.db.RedAlertViewModel;
 
 /**
- * The main activity (entry point) of the Red Alert! app
+ * A placeholder fragment containing a simple view.
  */
-public class AlertListActivity extends AppCompatActivity {
+public class AlertListFragment extends Fragment {
 
-    AlertListAdapter adapter;
+
+    RecyclerView_AlertListAdapter adapter;
     NotificationManager notificationManager;
     private RedAlertViewModel redAlertViewModel;
     private RecyclerView recyclerView;
 
+    public static AlertListFragment newInstance() {
+        AlertListFragment fragment = new AlertListFragment();
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alert_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setContentView(R.layout.activity_alert_list);
+
+    }
+
+
+    /**
+     * this displays the "empty" view if there are no alerts, and hides it if there are alerts.
+     *
+     * @param alerts
+     * @param recyclerView
+     * @param noAlertsView
+     */
+    private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
+        if (alerts != null && !alerts.isEmpty()) {
+            recyclerView.setVisibility(View.VISIBLE);
+            noAlertsView.setVisibility(View.GONE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            noAlertsView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.activity_alert_list, container, false);
+
         notificationManager = NotificationManager.getInstance();
-        notificationManager.init(getApplicationContext());
+        notificationManager.init(this.getContext());
         redAlertViewModel = ViewModelProviders.of(this).get(RedAlertViewModel.class);
-        adapter = new AlertListAdapter(this, redAlertViewModel);
-        recyclerView = findViewById(R.id.alert_list_view);
-        final TextView noAlertsView = findViewById(R.id.empty_view);
+        adapter = new RecyclerView_AlertListAdapter(this.getContext(), redAlertViewModel);
+        recyclerView = root.findViewById(R.id.recyclerview_alert_list);
+        final TextView noAlertsView = root.findViewById(R.id.recyclerview_alert_list_empty_view);
 
         final LiveData<List<Alert>> alerts = redAlertViewModel.getAllAlerts();
 
         toggleAlertListVisibility(alerts.getValue(), recyclerView, noAlertsView);
-        
+
         adapter.setAlerts(alerts.getValue());
         redAlertViewModel.getAllAlerts().observe(this, new Observer<List<Alert>>() {
             @Override
@@ -80,19 +100,17 @@ public class AlertListActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton addRedFab = (FloatingActionButton) findViewById(R.id.add_red);
-        addRedFab.setOnClickListener(new AddAlertClickListener(Alert.RED_ALERT));
-        FloatingActionButton addOrangeFab = (FloatingActionButton) findViewById(R.id.add_orange);
-        addOrangeFab.setOnClickListener(new AddAlertClickListener(Alert.ORANGE_ALERT));
-        FloatingActionButton addYellowFab = (FloatingActionButton) findViewById(R.id.add_yellow);
-        addYellowFab.setOnClickListener(new AddAlertClickListener(Alert.YELLOW_ALERT));
-        FloatingActionButton removeAllFab = (FloatingActionButton) findViewById(R.id.remove_all);
-        removeAllFab.setOnClickListener(new RemoveAllAlertsClickListener());
+        FloatingActionButton addRedFab = (FloatingActionButton) root.findViewById(R.id.button_alert_list_add_red);
+        addRedFab.setOnClickListener(new AlertListFragment.AddAlertClickListener(Alert.RED_ALERT));
+        FloatingActionButton addOrangeFab = (FloatingActionButton) root.findViewById(R.id.button_alert_list_add_orange);
+        addOrangeFab.setOnClickListener(new AlertListFragment.AddAlertClickListener(Alert.ORANGE_ALERT));
+        FloatingActionButton removeAllFab = (FloatingActionButton) root.findViewById(R.id.button_alert_list_remove_all);
+        removeAllFab.setOnClickListener(new AlertListFragment.RemoveAllAlertsClickListener());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
@@ -117,56 +135,8 @@ public class AlertListActivity extends AppCompatActivity {
         });
 
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
 
-
-
-
-    /**
-     * this displays the "empty" view if there are no alerts, and hides it if there are alerts.
-     * @param alerts
-     * @param recyclerView
-     * @param noAlertsView
-     */
-    private void toggleAlertListVisibility(List<Alert> alerts, View recyclerView, View noAlertsView) {
-        if (alerts != null && !alerts.isEmpty()) {
-            recyclerView.setVisibility(View.VISIBLE);
-            noAlertsView.setVisibility(View.GONE);
-        } else {
-            recyclerView.setVisibility(View.GONE);
-            noAlertsView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_alert_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
-            Intent about = new Intent();
-            about.setClassName(this, "ro.antiprotv.redalert.AboutActivity");
-            startActivity(about);
-            return true;
-        }
-        if (id == R.id.action_help) {
-            Intent about = new Intent();
-            about.setClassName(this, "ro.antiprotv.redalert.HelpActivity");
-            startActivity(about);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return root;
     }
 
     /**
@@ -183,16 +153,16 @@ public class AlertListActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListFragment.this.getContext());
             dialogBuilder.setTitle(getString(R.string.add_new_alert, getResources().getString(Alert.getColorString(level)).toUpperCase()));
             LinearLayout layout = (LinearLayout) LayoutInflater.from(v.getContext()).inflate(R.layout.add_alert_dialog, null);
 
-            final AutoCompleteTextView inputItem = layout.findViewById(R.id.add_item);
-            final AutoCompleteTextView inputStore = layout.findViewById(R.id.add_store);
+            final AutoCompleteTextView inputItem = layout.findViewById(R.id.dialog_alert_autocomplete_add_item);
+            final AutoCompleteTextView inputStore = layout.findViewById(R.id.dialog_alert_autocomplete_add_store);
             inputItem.setHint(R.string.what);
             inputStore.setHint(R.string.where);
 
-            ArrayAdapter autocompleteItemAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, true);
+            ArrayAdapter autocompleteItemAdapter = new ItemListAutocompleteAdapter(AlertListFragment.this.getContext(), android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, true);
             inputItem.setAdapter(autocompleteItemAdapter);
             inputItem.setThreshold(2);
             inputItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -205,17 +175,17 @@ public class AlertListActivity extends AppCompatActivity {
                 }
             });
 
-            ArrayAdapter autocompleteStoreAdapter = new ItemListAdapter(AlertListActivity.this, android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, false);
+            ArrayAdapter autocompleteStoreAdapter = new ItemListAutocompleteAdapter(AlertListFragment.this.getContext(), android.R.layout.simple_list_item_1, new ArrayList<String>(), redAlertViewModel, false);
             inputStore.setAdapter(autocompleteStoreAdapter);
 
             dialogBuilder.setView(layout);
             dialogBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    RedAlertViewModel vm = new RedAlertViewModel(AlertListActivity.this.getApplication());
+                    RedAlertViewModel vm = new RedAlertViewModel(AlertListFragment.this.getActivity().getApplication());
                     if (inputItem.getText().toString().trim().isEmpty()
                             && inputStore.getText().toString().trim().isEmpty()) {
-                        Toast.makeText(AlertListActivity.this, R.string.empty_alert, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AlertListFragment.this.getContext(), R.string.empty_alert, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     } else {
                         Alert alert = new Alert(level, inputItem.getText().toString().trim(), inputStore.getText().toString().trim());
@@ -236,11 +206,11 @@ public class AlertListActivity extends AppCompatActivity {
         }
     }
 
-    private class RemoveAllAlertsClickListener implements View.OnClickListener{
+    private class RemoveAllAlertsClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AlertListActivity.this);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(v.getContext());
             dialogBuilder.setTitle(getString(R.string.interogative_remove_all_alert));
             dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
@@ -248,7 +218,7 @@ public class AlertListActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
-            dialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener(){
+            dialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface v, int which) {
                     redAlertViewModel.removeAllAlerts();
@@ -260,6 +230,4 @@ public class AlertListActivity extends AppCompatActivity {
             dialogBuilder.show();
         }
     }
-
-
 }

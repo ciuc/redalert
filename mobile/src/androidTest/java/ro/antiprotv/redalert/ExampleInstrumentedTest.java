@@ -1,4 +1,4 @@
-package ro.antiprotv.redalert;
+package ro.antiprotv.sugar;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

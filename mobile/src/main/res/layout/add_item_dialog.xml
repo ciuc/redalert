@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/dialog.item.textinput.add_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog.item.textinput.quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="HOW MANY:"
+            android:inputType="number" />
+
+        <Spinner
+            android:id="@+id/dialog.item.dropdown.unit"
+            style="@style/units_spinner"
+            android:entries="@array/units"
+            android:prompt="@string/unit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3sp"
+            android:alpha="0.38"
+            android:text="@string/dialog.item.category.prompt"
+            android:textAppearance="@style/Widget.AppCompat.EditText"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/dialog.item.dropdown.category"
+            style="@style/units_spinner"
+            android:entries="@array/categories"
+            android:prompt="@string/category" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/dialog.item.section.advanced"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.DialogWindowTitle"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3sp"
+            android:alpha="0.38"
+            android:text="@string/dialog.item.alert_notification_quantity_left.prompt_left"
+            android:textAppearance="@style/Widget.AppCompat.EditText"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog.item.textinput.dialog.item.alert_notification_quantity_left.input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3sp"
+            android:alpha="0.38"
+            android:text="@string/dialog.item.alert_notification_quantity_left.prompt_right"
+            android:textAppearance="@style/Widget.AppCompat.EditText"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3sp"
+            android:alpha="0.38"
+            android:text="@string/dialog.item.alert_cancel_quantity.prompt"
+            android:textAppearance="@style/Widget.AppCompat.EditText"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/dialog.item.checkbox.auto_remove_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+    </LinearLayout>
+
+    <!--ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:src="@drawable/ic_help_outline_black_24dp" /-->
+
+    <ScrollView
+        android:id="@+id/dialog.item.scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="3sp"
+            android:alpha="0.38"
+            android:scrollbars="vertical"
+            android:text="@string/dialog.items.help"
+            android:textAppearance="@style/Widget.AppCompat.EditText"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </ScrollView>
+</LinearLayout>

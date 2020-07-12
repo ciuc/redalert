@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:title="@string/title_help"
-    tools:context="ro.antiprotv.redalert.HelpActivity">
+    tools:context="ro.antiprotv.sugar.HelpActivity">
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

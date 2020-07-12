@@ -1,4 +1,4 @@
-package ro.antiprotv.redalert;
+package ro.antiprotv.sugar;
 
 import org.junit.Test;
 
