@@ -5,23 +5,23 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog.alert.textinput.add_item"
+        android:id="@+id/dialog_alert_textinput_add_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <AutoCompleteTextView
-            android:id="@+id/dialog.alert.autocomplete.add_item"
+            android:id="@+id/dialog_alert_autocomplete_add_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog.alert.textinput.add_store"
+        android:id="@+id/dialog_alert_textinput_add_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <AutoCompleteTextView
-            android:id="@+id/dialog.alert.autocomplete.add_store"
+            android:id="@+id/dialog_alert_autocomplete_add_store"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>

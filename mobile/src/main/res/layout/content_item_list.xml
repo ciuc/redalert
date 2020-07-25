@@ -9,100 +9,100 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ImageView
-        android:id="@+id/adapter.item.image.item_icon"
+        android:id="@+id/adapter_item_image_item_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/ic_check_circle_black_24dp" />
 
     <TextView
-        android:id="@+id/adapter.items.text.item_name"
+        android:id="@+id/adapter_items_text_item_name"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_toRightOf="@+id/adapter.item.image.item_icon"
+        android:layout_toEndOf="@+id/adapter_item_image_item_icon"
         android:elevation="100dp"
         android:text="Toothbrush"
         android:textColor="#0037FF"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/adapter.items.text.quantity"
+        android:id="@+id/adapter_items_text_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/adapter.items.text.item_name"
-        android:layout_toRightOf="@+id/adapter.item.image.item_icon"
+        android:layout_below="@+id/adapter_items_text_item_name"
+        android:layout_toEndOf="@+id/adapter_item_image_item_icon"
         android:text="1" />
 
     <TextView
-        android:id="@+id/adapter.item.text.unit"
+        android:id="@+id/adapter_item_text_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/adapter.items.text.item_name"
-        android:layout_marginLeft="4dp"
-        android:layout_toRightOf="@+id/adapter.items.text.quantity"
+        android:layout_below="@+id/adapter_items_text_item_name"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/adapter_items_text_quantity"
         android:text="KGS" />
 
     <TextView
-        android:id="@+id/adapter.items.text.category"
+        android:id="@+id/adapter_items_text_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
         android:elevation="100dp"
         android:layout_alignParentEnd="true"
         android:text="[FOOD]" />
 
     <ImageButton
-        android:id="@+id/adapter.items.button.filterByCategory"
+        android:id="@+id/adapter_items_button_filterByCategory"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="3dp"
-        android:layout_toLeftOf="@id/adapter.items.text.category"
+        android:layout_toStartOf="@id/adapter_items_text_category"
         android:src="@drawable/ic_filter_list_black_24dp"
         android:tint="#000000" />
 
 
     <ImageButton
-        android:id="@+id/adapter.items.button.expand_item"
+        android:id="@+id/adapter_items_button_expand_item"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_toRightOf="@id/adapter.item.text.unit"
+        android:layout_toEndOf="@id/adapter_item_text_unit"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
         android:visibility="gone"
         android:background="#FFFFFF"
         android:src="@drawable/ic_expand_more_black_24dp"
         android:tint="#000000" />
 
     <ImageButton
-        android:id="@+id/adapter.items.button.add_quantity"
+        android:id="@+id/adapter_items_button_add_quantity"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@id/adapter.items.text.item_name"
+        android:layout_below="@id/adapter_items_text_item_name"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp"
         android:background="#FFFFFF"
         android:src="@drawable/ic_add_circle_outline_black_24dp"
         android:tint="#00FF00" />
 
     <ImageButton
-        android:id="@+id/adapter.items.button.subtract_quantity"
+        android:id="@+id/adapter_items_button_subtract_quantity"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@id/adapter.items.text.item_name"
-        android:layout_marginRight="0dp"
-        android:layout_toLeftOf="@+id/adapter.items.button.add_quantity"
+        android:layout_below="@id/adapter_items_text_item_name"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/adapter_items_button_add_quantity"
         android:background="#FFFFFF"
         android:src="@drawable/ic_remove_circle_outline_black_24dp"
         android:tint="#FF0000" />
 
     <ImageButton
-        android:id="@+id/adapter.items.button.edit_item"
+        android:id="@+id/adapter_items_button_edit_item"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@id/adapter.items.text.item_name"
-        android:layout_marginRight="0dp"
-        android:layout_toLeftOf="@+id/adapter.items.button.subtract_quantity"
+        android:layout_below="@id/adapter_items_text_item_name"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/adapter_items_button_subtract_quantity"
         android:background="#FFFFFF"
         android:src="@drawable/ic_edit_black_24dp" />
 </RelativeLayout>

@@ -4,8 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#FF0000</color>
-    <color name="yellow">#ffea00</color>
-    <color name="orange">#ffab00</color>
-    <color name="green">#00ff00</color>
+    <color name="orange">#FFAB00</color>
+    <color name="yellow">#FFEA00</color>
+    <color name="deleted">#00FF00</color>
+    <color name="green">#00FF00</color>
 
 </resources>

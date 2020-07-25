@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:title="@string/title_help"
-    tools:context="ro.antiprotv.sugar.AboutActivity">
+    tools:context="ro.antiprotv.sugar.ui.AboutActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
         android:scrollbars = "vertical"
         android:textIsSelectable="true"/>
     <Button
-        android:id="@+id/button.about_back"
+        android:id="@+id/button_about_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
