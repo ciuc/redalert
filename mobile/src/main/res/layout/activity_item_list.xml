@@ -9,13 +9,13 @@
 
     <!--include layout="@layout/content_alert_list" /-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview.item_list"
+        android:id="@+id/recyclerview_item_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/recyclerview.item_list.empty_view"
+        android:id="@+id/recyclerview_item_list_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -23,7 +23,7 @@
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button.item_list.add_item"
+        android:id="@+id/button_item_list_add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

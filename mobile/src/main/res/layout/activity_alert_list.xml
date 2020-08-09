@@ -8,13 +8,13 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview.alert_list"
+        android:id="@+id/recyclerview_alert_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/recyclerview.alert_list.empty_view"
+        android:id="@+id/recyclerview_alert_list_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -22,7 +22,7 @@
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button.alert_list.add_orange"
+        android:id="@+id/button_alert_list_add_orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -33,22 +33,22 @@
         app:useCompatPadding="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button.alert_list.remove_all"
+        android:id="@+id/button_alert_list_remove_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/button.alert_list.add_orange"
+        android:layout_toEndOf="@id/button_alert_list_add_orange"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_delete_forever_white_12dp"
         app:useCompatPadding="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button.alert_list.add_red"
+        android:id="@+id/button_alert_list_add_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/button.alert_list.add_orange"
+        android:layout_toStartOf="@id/button_alert_list_add_orange"
         app:backgroundTint="@color/red"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_add_black_12dp"

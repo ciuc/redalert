@@ -9,49 +9,49 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ImageView
-        android:id="@+id/image.alert_icon"
+        android:id="@+id/image_alert_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="7dp"
-        android:layout_marginRight="7dp"
+        android:layout_marginEnd="7dp"
         android:src="@drawable/ic_warning_red_24dp" />
 
     <TextView
-        android:id="@+id/adapter.alerts.text.item"
+        android:id="@+id/adapter_alerts_text_item"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_toRightOf="@+id/image.alert_icon"
+        android:layout_toEndOf="@+id/image_alert_icon"
         android:fontFamily="@font/coda"
         android:text="Toothbrush"
         android:textColor="#FF0000"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/adapter.alerts.text.store"
+        android:id="@+id/adapter_alerts_text_store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/adapter.alerts.text.item"
-        android:layout_toRightOf="@+id/image.alert_icon"
+        android:layout_below="@+id/adapter_alerts_text_item"
+        android:layout_toEndOf="@+id/image_alert_icon"
         android:text="FROM: DM in MegaMall" />
 
     <ImageButton
-        android:id="@+id/adapter.alerts.button.filterByStore"
+        android:id="@+id/adapter_alerts_button_filterByStore"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_below="@+id/adapter.alerts.text.item"
-        android:layout_marginLeft="3dp"
+        android:layout_below="@+id/adapter_alerts_text_item"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
-        android:layout_toRightOf="@id/adapter.alerts.text.store"
+        android:layout_toEndOf="@id/adapter_alerts_text_store"
         android:src="@drawable/ic_filter_list_black_24dp"
         android:tint="#000000" />
 
     <ImageButton
-        android:id="@+id/adapter.alerts.button.edit_alert"
+        android:id="@+id/adapter_alerts_button_edit_alert"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/adapter.alerts.text.item"
-        android:layout_marginRight="0dp"
+        android:layout_below="@+id/adapter_alerts_text_item"
+        android:layout_marginEnd="0dp"
         android:background="#FFFFFF"
         android:src="@drawable/ic_edit_black_24dp" />
 </RelativeLayout>

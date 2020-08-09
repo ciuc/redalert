@@ -6,7 +6,7 @@
 
     <string name="red">red</string>
     <string name="orange">orange</string>
-    <string name="green">green</string>
+    <string name="deleted">green</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
@@ -17,9 +17,9 @@
     <string name="channel_description">Notifications from Red Alert list app</string>
 
     <string name="no_alerts">You have no alerts. Looks like you\'ve got everything covered ;)</string>
-    <string name="no_items">You have no items in your house? Add some in your app too... ;)</string>
-    <string name="empty_alert">You must input at least an item or a store...</string>
-    <string name="empty_item">You must input the name...</string>
+    <string name="no_items">You have no items in your house? Add some in your app too… ;)</string>
+    <string name="empty_alert">You must input at least an item or a store…</string>
+    <string name="empty_item">You must input the name…</string>
 
     <string name="what">WHAT:</string>
     <string name="where">WHERE FROM:</string>
@@ -27,7 +27,7 @@
     <string name="unit">UNIT:</string>
     <string name="add">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="back">Back</string>
     <string name="from">FROM: %1$s</string>
 
@@ -87,11 +87,11 @@ suggestions, it will autocomplete the store name based on some criteria. You can
     <string name="dialog.item.alert_notification_quantity_left.prompt_right">LEFT </string>
     <string name="dialog.item.alert_cancel_quantity.prompt">CANCEL ALERT WHEN ADDING</string>
     <string name="dialog.item.section.advanced">Settings For the Wild at Heart:</string>
-    <string name="item.units.1">KGS</string>
-    <string name="item.units.2">BOXES</string>
-    <string name="item.units.3">BOTTLES</string>
-    <string name="item.units.4">PIECES</string>
-    <string name="item.units.99">OTHER</string>
+    <string name="item_unit_kg">KGS</string>
+    <string name="item_unit_box">BOXES</string>
+    <string name="item_unit_bottle">BOTTLES</string>
+    <string name="item_unit_pc">PIECES</string>
+    <string name="item_unit_other">OTHER</string>
     <string-array name="units">
         <item>KGS</item>
         <item>BOXES</item>
@@ -99,10 +99,10 @@ suggestions, it will autocomplete the store name based on some criteria. You can
         <item>PIECES</item>
         <item>OTHER</item>
     </string-array>
-    <string name="item.categories.1">FOOD</string>
-    <string name="item.categories.2">DRINKS</string>
-    <string name="item.categories.3">CLEANING</string>
-    <string name="item.categories.99">OTHER</string>
+    <string name="item_category_food">FOOD</string>
+    <string name="item_category_drink">DRINKS</string>
+    <string name="item_category_cleaning">CLEANING</string>
+    <string name="item_category_other">OTHER</string>
     <string-array name="categories">
         <item>FOOD</item>
         <item>DRINKS</item>

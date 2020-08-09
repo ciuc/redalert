@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/dialog.item.textinput.add_item"
+        android:id="@+id/dialog_item_textinput_add_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -15,14 +15,14 @@
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog.item.textinput.quantity"
+            android:id="@+id/dialog_item_textinput_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="HOW MANY:"
             android:inputType="number" />
 
         <Spinner
-            android:id="@+id/dialog.item.dropdown.unit"
+            android:id="@+id/dialog_item_dropdown_unit"
             style="@style/units_spinner"
             android:entries="@array/units"
             android:prompt="@string/unit" />
@@ -44,7 +44,7 @@
             android:textSize="18sp" />
 
         <Spinner
-            android:id="@+id/dialog.item.dropdown.category"
+            android:id="@+id/dialog_item_dropdown_category"
             style="@style/units_spinner"
             android:entries="@array/categories"
             android:prompt="@string/category" />
@@ -76,7 +76,7 @@
             android:textSize="18sp" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog.item.textinput.dialog.item.alert_notification_quantity_left.input"
+            android:id="@+id/dialog_item_textinput_dialog_item_alert_notification_quantity_left_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -109,7 +109,7 @@
             android:textSize="18sp" />
 
         <CheckBox
-            android:id="@+id/dialog.item.checkbox.auto_remove_alert"
+            android:id="@+id/dialog_item_checkbox_auto_remove_alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"/>
@@ -122,7 +122,7 @@
         android:src="@drawable/ic_help_outline_black_24dp" /-->
 
     <ScrollView
-        android:id="@+id/dialog.item.scrollView"
+        android:id="@+id/dialog_item_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
@@ -130,7 +130,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="3sp"
             android:alpha="0.38"
             android:scrollbars="vertical"
